@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deutsch Artikel Lernen - تعلم أدوات التعريف الألمانية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            min-height: 100dvh; /* better on mobile */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px; /* smaller padding for phones */
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 100%;
+            padding: 20px;
+        }
+
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        @media (max-width: 600px) {
+
+            h1 {
+                font-size: 22px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .arabic-word {
+                font-size: 36px;
+            }
+
+            .score-value {
+                font-size: 24px;
+            }
+
+            .article-btn {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            .word-input {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            .submit-btn {
+                font-size: 16px;
+                padding: 14px;
+            }
+
+            .restart-btn {
+                font-size: 15px;
+                padding: 12px;
+            }
+
+            .quiz-card {
+                padding: 20px;
+            }
+
+            .article-buttons {
+                flex-direction: column; /* BIG improvement on phones */
+            }
+        }
+
+
+        .subtitle {
+            text-align: center;
+            color: #764ba2;
+            margin-bottom: 30px;
+            font-size: 20px;
+            direction: rtl;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .quiz-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .arabic-word {
+            text-align: center;
+            font-size: 48px;
+            color: #333;
+            margin-bottom: 30px;
+            direction: rtl;
+            font-weight: bold;
+        }
+
+        .article-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .article-btn {
+            flex: 1;
+            padding: 15px;
+            border: 3px solid #e0e0e0;
+            background: white;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .article-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-btn.selected {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        .article-btn.correct {
+            border-color: #4caf50;
+            background: #4caf50;
+            color: white;
+        }
+
+        .article-btn.incorrect {
+            border-color: #f44336;
+            background: #f44336;
+            color: white;
+        }
+
+        .word-input {
+            width: 100%;
+            padding: 15px;
+            border: 3px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 18px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        .word-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .word-input.correct {
+            border-color: #4caf50;
+            background: #e8f5e9;
+        }
+
+        .word-input.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .feedback.correct {
+            background: #4caf50;
+            color: white;
+        }
+
+        .feedback.incorrect {
+            background: #f44336;
+            color: white;
+        }
+
+        .correct-answer {
+            margin-top: 10px;
+            font-size: 20px;
+            color: white;
+        }
+
+        .progress {
+            margin-top: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .restart-btn {
+            width: 100%;
+            padding: 15px;
+            background: #764ba2;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            background: #5e3a82;
+            transform: translateY(-2px);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .bounce {
+            animation: bounce 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Deutsch Mit Radouane</h1>
+        <p class="subtitle">تعلم أدوات التعريف الألمانية</p>
+
+        <div class="score-board">
+            <div class="score-item">
+                <div class="score-label">Richtig / صحيح</div>
+                <div class="score-value" id="correct-score">0</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">Falsch / خطأ</div>
+                <div class="score-value" id="incorrect-score">0</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">Gesamt / الإجمالي</div>
+                <div class="score-value" id="total-score">0</div>
+            </div>
+        </div>
+
+        <div class="quiz-card" id="quiz-card">
+            <div class="arabic-word" id="arabic-word"></div>
+
+            <div class="article-buttons">
+                <button class="article-btn" data-article="der">der</button>
+                <button class="article-btn" data-article="die">die</button>
+                <button class="article-btn" data-article="das">das</button>
+            </div>
+
+            <input 
+                type="text" 
+                class="word-input" 
+                id="word-input" 
+                placeholder="Geben Sie das deutsche Wort ein / أدخل الكلمة الألمانية"
+                autocomplete="off"
+            >
+
+            <button class="submit-btn" id="submit-btn">Prüfen / تحقق</button>
+
+            <div class="feedback" id="feedback" style="display: none;"></div>
+
+            <div class="progress" id="progress"></div>
+        </div>
+
+        <button class="restart-btn" id="restart-btn">Neu starten / ابدأ من جديد</button>
+    </div>
+
+    <script>
+        const vocabulary = [
+            { german: "der Mann", arabic: "الرجل", article: "der", word: "Mann" },
+            { german: "die Frau", arabic: "المرأة", article: "die", word: "Frau" },
+            { german: "das Kind", arabic: "الطفل", article: "das", word: "Kind" },
+            { german: "der Mensch", arabic: "الإنسان", article: "der", word: "Mensch" },
+            { german: "der Freund", arabic: "الصديق", article: "der", word: "Freund" },
+            { german: "die Freundin", arabic: "الصديقة", article: "die", word: "Freundin" },
+            { german: "die Familie", arabic: "العائلة", article: "die", word: "Familie" },
+            { german: "der Name", arabic: "الاسم", article: "der", word: "Name" },
+            { german: "das Land", arabic: "البلد", article: "das", word: "Land" },
+            { german: "die Stadt", arabic: "المدينة", article: "die", word: "Stadt" },
+            { german: "das Haus", arabic: "البيت", article: "das", word: "Haus" },
+            { german: "die Wohnung", arabic: "الشقة", article: "die", word: "Wohnung" },
+            { german: "das Zimmer", arabic: "الغرفة", article: "das", word: "Zimmer" },
+            { german: "die Tür", arabic: "الباب", article: "die", word: "Tür" },
+            { german: "das Fenster", arabic: "النافذة", article: "das", word: "Fenster" },
+            { german: "der Tisch", arabic: "الطاولة", article: "der", word: "Tisch" },
+            { german: "der Stuhl", arabic: "الكرسي", article: "der", word: "Stuhl" },
+            { german: "das Bett", arabic: "السرير", article: "das", word: "Bett" },
+            { german: "der Schlüssel", arabic: "المفتاح", article: "der", word: "Schlüssel" },
+            { german: "das Bad", arabic: "الحمّام", article: "das", word: "Bad" },
+            { german: "die Küche", arabic: "المطبخ", article: "die", word: "Küche" },
+            { german: "das Auto", arabic: "السيارة", article: "das", word: "Auto" },
+            { german: "der Bus", arabic: "الحافلة", article: "der", word: "Bus" },
+            { german: "der Zug", arabic: "القطار", article: "der", word: "Zug" },
+            { german: "der Bahnhof", arabic: "محطة القطار", article: "der", word: "Bahnhof" },
+            { german: "der Flughafen", arabic: "المطار", article: "der", word: "Flughafen" },
+            { german: "die Straße", arabic: "الشارع", article: "die", word: "Straße" },
+            { german: "der Weg", arabic: "الطريق", article: "der", word: "Weg" },
+            { german: "der Platz", arabic: "الساحة", article: "der", word: "Platz" },
+            { german: "die Ecke", arabic: "الزاوية", article: "die", word: "Ecke" },
+            { german: "die Arbeit", arabic: "العمل", article: "die", word: "Arbeit" },
+            { german: "der Job", arabic: "الوظيفة", article: "der", word: "Job" },
+            { german: "das Büro", arabic: "المكتب", article: "das", word: "Büro" },
+            { german: "der Chef", arabic: "المدير", article: "der", word: "Chef" },
+            { german: "der Kollege", arabic: "الزميل", article: "der", word: "Kollege" },
+            { german: "die Firma", arabic: "الشركة", article: "die", word: "Firma" },
+            { german: "das Geld", arabic: "المال", article: "das", word: "Geld" },
+            { german: "der Preis", arabic: "السعر", article: "der", word: "Preis" },
+            { german: "die Rechnung", arabic: "الفاتورة", article: "die", word: "Rechnung" },
+            { german: "der Vertrag", arabic: "العقد", article: "der", word: "Vertrag" },
+            { german: "die Zeit", arabic: "الوقت", article: "die", word: "Zeit" },
+            { german: "der Tag", arabic: "اليوم", article: "der", word: "Tag" },
+            { german: "die Woche", arabic: "الأسبوع", article: "die", word: "Woche" },
+            { german: "das Jahr", arabic: "السنة", article: "das", word: "Jahr" },
+            { german: "der Morgen", arabic: "الصباح", article: "der", word: "Morgen" },
+            { german: "der Abend", arabic: "المساء", article: "der", word: "Abend" },
+            { german: "die Nacht", arabic: "الليل", article: "die", word: "Nacht" },
+            { german: "das Wochenende", arabic: "عطلة نهاية الأسبوع", article: "das", word: "Wochenende" },
+            { german: "der Moment", arabic: "اللحظة", article: "der", word: "Moment" },
+            { german: "der Termin", arabic: "الموعد", article: "der", word: "Termin" },
+            { german: "das Essen", arabic: "الطعام", article: "das", word: "Essen" },
+            { german: "das Getränk", arabic: "الشراب", article: "das", word: "Getränk" },
+            { german: "das Wasser", arabic: "الماء", article: "das", word: "Wasser" },
+            { german: "das Brot", arabic: "الخبز", article: "das", word: "Brot" },
+            { german: "der Reis", arabic: "الأرز", article: "der", word: "Reis" },
+            { german: "das Fleisch", arabic: "اللحم", article: "das", word: "Fleisch" },
+            { german: "das Gemüse", arabic: "الخضار", article: "das", word: "Gemüse" },
+            { german: "das Obst", arabic: "الفاكهة", article: "das", word: "Obst" },
+            { german: "der Kaffee", arabic: "القهوة", article: "der", word: "Kaffee" },
+            { german: "der Tee", arabic: "الشاي", article: "der", word: "Tee" },
+            { german: "der Supermarkt", arabic: "السوبرماركت", article: "der", word: "Supermarkt" },
+            { german: "das Geschäft", arabic: "المتجر", article: "das", word: "Geschäft" },
+            { german: "der Markt", arabic: "السوق", article: "der", word: "Markt" },
+            { german: "die Kasse", arabic: "الصندوق", article: "die", word: "Kasse" },
+            { german: "der Bon", arabic: "الإيصال", article: "der", word: "Bon" },
+            { german: "die Tüte", arabic: "الكيس", article: "die", word: "Tüte" },
+            { german: "das Angebot", arabic: "العرض", article: "das", word: "Angebot" },
+            { german: "die Größe", arabic: "المقاس", article: "die", word: "Größe" },
+            { german: "die Farbe", arabic: "اللون", article: "die", word: "Farbe" },
+            { german: "das Produkt", arabic: "المنتج", article: "das", word: "Produkt" },
+            { german: "der Arzt", arabic: "الطبيب", article: "der", word: "Arzt" },
+            { german: "das Krankenhaus", arabic: "المستشفى", article: "das", word: "Krankenhaus" },
+            { german: "die Apotheke", arabic: "الصيدلية", article: "die", word: "Apotheke" },
+            { german: "das Medikament", arabic: "الدواء", article: "das", word: "Medikament" },
+            { german: "der Schmerz", arabic: "الألم", article: "der", word: "Schmerz" },
+            { german: "die Krankheit", arabic: "المرض", article: "die", word: "Krankheit" },
+            { german: "die Hilfe", arabic: "المساعدة", article: "die", word: "Hilfe" },
+            { german: "die Versicherung", arabic: "التأمين", article: "die", word: "Versicherung" },
+            { german: "die Praxis", arabic: "العيادة", article: "die", word: "Praxis" },
+            { german: "der Notfall", arabic: "حالة طوارئ", article: "der", word: "Notfall" },
+            { german: "die Schule", arabic: "المدرسة", article: "die", word: "Schule" },
+            { german: "die Universität", arabic: "الجامعة", article: "die", word: "Universität" },
+            { german: "der Kurs", arabic: "الدورة", article: "der", word: "Kurs" },
+            { german: "der Lehrer", arabic: "المعلّم", article: "der", word: "Lehrer" },
+            { german: "der Schüler", arabic: "الطالب", article: "der", word: "Schüler" },
+            { german: "die Sprache", arabic: "اللغة", article: "die", word: "Sprache" },
+            { german: "das Deutsch", arabic: "اللغة الألمانية", article: "das", word: "Deutsch" },
+            { german: "das Wort", arabic: "الكلمة", article: "das", word: "Wort" },
+            { german: "der Satz", arabic: "الجملة", article: "der", word: "Satz" },
+            { german: "die Bedeutung", arabic: "المعنى", article: "die", word: "Bedeutung" },
+            { german: "die Frage", arabic: "السؤال", article: "die", word: "Frage" },
+            { german: "die Antwort", arabic: "الجواب", article: "die", word: "Antwort" },
+            { german: "das Beispiel", arabic: "المثال", article: "das", word: "Beispiel" },
+            { german: "die Regel", arabic: "القاعدة", article: "die", word: "Regel" },
+            { german: "die Erklärung", arabic: "الشرح", article: "die", word: "Erklärung" },
+            { german: "die Information", arabic: "المعلومة", article: "die", word: "Information" },
+            { german: "das Problem", arabic: "المشكلة", article: "das", word: "Problem" },
+            { german: "die Lösung", arabic: "الحل", article: "die", word: "Lösung" },
+            { german: "die Meinung", arabic: "الرأي", article: "die", word: "Meinung" },
+            { german: "die Erfahrung", arabic: "الخبرة", article: "die", word: "Erfahrung" }
+        ];
+
+        let currentQuestion = null;
+        let selectedArticle = null;
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let totalCount = 0;
+        let usedWords = [];
+
+        const arabicWordEl = document.getElementById('arabic-word');
+        const wordInputEl = document.getElementById('word-input');
+        const submitBtn = document.getElementById('submit-btn');
+        const feedbackEl = document.getElementById('feedback');
+        const progressEl = document.getElementById('progress');
+        const correctScoreEl = document.getElementById('correct-score');
+        const incorrectScoreEl = document.getElementById('incorrect-score');
+        const totalScoreEl = document.getElementById('total-score');
+        const restartBtn = document.getElementById('restart-btn');
+        const articleBtns = document.querySelectorAll('.article-btn');
+
+        // Article button selection
+        articleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                articleBtns.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedArticle = btn.dataset.article;
+            });
+        });
+
+        // Load new question
+        function loadQuestion() {
+            // Reset if all words used
+            if (usedWords.length === vocabulary.length) {
+                usedWords = [];
+            }
+
+            // Get random unused word
+            let availableWords = vocabulary.filter((_, index) => !usedWords.includes(index));
+            let randomIndex = Math.floor(Math.random() * availableWords.length);
+            currentQuestion = availableWords[randomIndex];
+            
+            // Mark as used
+            let originalIndex = vocabulary.indexOf(currentQuestion);
+            usedWords.push(originalIndex);
+
+            // Display question
+            arabicWordEl.textContent = currentQuestion.arabic;
+            wordInputEl.value = '';
+            wordInputEl.className = 'word-input';
+            feedbackEl.style.display = 'none';
+            selectedArticle = null;
+            
+            // Reset buttons
+            articleBtns.forEach(btn => {
+                btn.className = 'article-btn';
+            });
+
+            submitBtn.disabled = false;
+            updateProgress();
+        }
+
+        // Normalize German text for comparison
+        function normalizeGerman(text) {
+            return text.trim()
+                .toLowerCase()
+                .replace(/ä/g, 'ae')
+                .replace(/ö/g, 'oe')
+                .replace(/ü/g, 'ue')
+                .replace(/ß/g, 'ss');
+        }
+
+        // Check answer
+        function checkAnswer() {
+            if (!selectedArticle) {
+                alert('Bitte wählen Sie einen Artikel! / الرجاء اختيار أداة تعريف!');
+                return;
+            }
+
+            const userWord = wordInputEl.value.trim();
+            if (!userWord) {
+                alert('Bitte geben Sie ein Wort ein! / الرجاء إدخال كلمة!');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            totalCount++;
+
+            const correctArticle = selectedArticle === currentQuestion.article;
+            const correctWord = normalizeGerman(userWord) === normalizeGerman(currentQuestion.word);
+            const isCorrect = correctArticle && correctWord;
+
+            // Update article buttons
+            articleBtns.forEach(btn => {
+                if (btn.dataset.article === currentQuestion.article) {
+                    btn.classList.add('correct');
+                } else if (btn.dataset.article === selectedArticle && !correctArticle) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            // Update input field
+            wordInputEl.className = 'word-input ' + (correctWord ? 'correct' : 'incorrect');
+
+            if (isCorrect) {
+                correctCount++;
+                feedbackEl.className = 'feedback correct bounce';
+                feedbackEl.innerHTML = '✓ Richtig! / صحيح!';
+            } else {
+                incorrectCount++;
+                feedbackEl.className = 'feedback incorrect shake';
+                let errorMsg = '✗ Falsch! / خطأ!';
+                if (!correctArticle && !correctWord) {
+                    errorMsg += '<div class="correct-answer">Richtige Antwort: ' + currentQuestion.german + '</div>';
+                } else if (!correctArticle) {
+                    errorMsg += '<div class="correct-answer">Richtiger Artikel: ' + currentQuestion.article + '</div>';
+                } else {
+                    errorMsg += '<div class="correct-answer">Richtiges Wort: ' + currentQuestion.word + '</div>';
+                }
+                feedbackEl.innerHTML = errorMsg;
+            }
+
+            feedbackEl.style.display = 'block';
+            updateScores();
+
+            // Load next question after delay
+            setTimeout(() => {
+                loadQuestion();
+            }, 2500);
+        }
+
+        // Update scores
+        function updateScores() {
+            correctScoreEl.textContent = correctCount;
+            incorrectScoreEl.textContent = incorrectCount;
+            totalScoreEl.textContent = totalCount;
+        }
+
+        // Update progress
+        function updateProgress() {
+            progressEl.textContent = `Wort ${usedWords.length} von ${vocabulary.length} / كلمة ${usedWords.length} من ${vocabulary.length}`;
+        }
+
+        // Restart quiz
+        function restart() {
+            correctCount = 0;
+            incorrectCount = 0;
+            totalCount = 0;
+            usedWords = [];
+            updateScores();
+            loadQuestion();
+        }
+
+        // Event listeners
+        submitBtn.addEventListener('click', checkAnswer);
+        restartBtn.addEventListener('click', restart);
+        
+        wordInputEl.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !submitBtn.disabled) {
+                checkAnswer();
+            }
+        });
+
+        // Initialize
+        loadQuestion();
+    </script>
+</body>
+</html>
