@@ -43,6 +43,18 @@
             overflow: hidden;
         }
 
+        /* Page System */
+        .page {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
         /* Header - Compact */
         .header {
             text-align: center;
@@ -247,26 +259,151 @@
             flex-shrink: 0;
         }
 
-        /* Restart Button - Compact */
-        .restart-btn {
-            width: 100%;
+        /* Action Buttons */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 8px;
+            flex-shrink: 0;
+        }
+
+        .restart-btn, .stats-btn {
             padding: 10px;
-            background: #764ba2;
             color: white;
             border: none;
             border-radius: 8px;
             font-size: 14px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 8px;
             transition: all 0.2s ease;
-            flex-shrink: 0;
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
         }
 
-        .restart-btn:active {
+        .restart-btn {
+            background: #764ba2;
+        }
+
+        .stats-btn {
+            background: #ff6b6b;
+        }
+
+        .restart-btn:active, .stats-btn:active {
             transform: scale(0.98);
+        }
+
+        /* Statistics Page */
+        .stats-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-shrink: 0;
+        }
+
+        .stats-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .back-btn {
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .back-btn:active {
+            transform: scale(0.95);
+        }
+
+        .stats-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .stats-section {
+            margin-bottom: 16px;
+        }
+
+        .stats-section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            padding: 8px;
+            border-radius: 6px;
+            color: white;
+        }
+
+        .stats-section-title.correct-section {
+            background: #4caf50;
+        }
+
+        .stats-section-title.incorrect-section {
+            background: #f44336;
+        }
+
+        .stats-list {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 8px;
+        }
+
+        .stats-item {
+            background: white;
+            padding: 10px;
+            margin-bottom: 6px;
+            border-radius: 6px;
+            border-left: 4px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .stats-item.correct-item {
+            border-left-color: #4caf50;
+        }
+
+        .stats-item.incorrect-item {
+            border-left-color: #f44336;
+        }
+
+        .stats-item-word {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .stats-item-translation {
+            color: #666;
+            direction: rtl;
+            font-size: 13px;
+        }
+
+        .stats-item-answer {
+            font-size: 12px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        .stats-item-left {
+            flex: 1;
+        }
+
+        .stats-empty {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+            font-size: 14px;
         }
 
         /* Animations */
@@ -357,15 +494,23 @@
                 margin-top: 4px;
             }
 
-            .restart-btn {
+            .restart-btn, .stats-btn {
                 padding: 8px;
                 font-size: 12px;
-                margin-top: 6px;
             }
 
             .progress {
                 font-size: 10px;
                 margin-top: 6px;
+            }
+
+            .stats-title {
+                font-size: 16px;
+            }
+
+            .stats-item {
+                padding: 8px;
+                font-size: 12px;
             }
         }
 
@@ -395,54 +540,105 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Deutsch Mit Radouane</h1>
-            <p class="subtitle">تعلم أدوات التعريف الألمانية</p>
+        <!-- QUIZ PAGE -->
+        <div class="page active" id="quiz-page">
+            <div class="header">
+                <h1>Deutsch Mit Radouane</h1>
+                <p class="subtitle">تعلم أدوات التعريف الألمانية</p>
+            </div>
+
+            <div class="score-board">
+                <div class="score-item">
+                    <div class="score-label">Richtig<br>صحيح</div>
+                    <div class="score-value" id="correct-score">0</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-label">Falsch<br>خطأ</div>
+                    <div class="score-value" id="incorrect-score">0</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-label">Gesamt<br>الإجمالي</div>
+                    <div class="score-value" id="total-score">0</div>
+                </div>
+            </div>
+
+            <div class="quiz-card" id="quiz-card">
+                <div class="arabic-word" id="arabic-word"></div>
+
+                <div class="article-buttons">
+                    <button class="article-btn" data-article="der">der</button>
+                    <button class="article-btn" data-article="die">die</button>
+                    <button class="article-btn" data-article="das">das</button>
+                </div>
+
+                <input 
+                    type="text" 
+                    class="word-input" 
+                    id="word-input" 
+                    placeholder="Deutsche Wort / الكلمة الألمانية"
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                >
+
+                <button class="submit-btn" id="submit-btn">Prüfen / تحقق</button>
+
+                <div class="feedback" id="feedback" style="display: none;"></div>
+
+                <div class="progress" id="progress"></div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="restart-btn" id="restart-btn">Neu starten / ابدأ من جديد</button>
+                <button class="stats-btn" id="stats-btn">Statistik / إحصائيات</button>
+            </div>
         </div>
 
-        <div class="score-board">
-            <div class="score-item">
-                <div class="score-label">Richtig<br>صحيح</div>
-                <div class="score-value" id="correct-score">0</div>
+        <!-- STATISTICS PAGE -->
+        <div class="page" id="stats-page">
+            <div class="stats-header">
+                <div class="stats-title">Statistik / إحصائيات</div>
+                <button class="back-btn" id="back-btn">← Zurück / عودة</button>
             </div>
-            <div class="score-item">
-                <div class="score-label">Falsch<br>خطأ</div>
-                <div class="score-value" id="incorrect-score">0</div>
+
+            <div class="score-board">
+                <div class="score-item">
+                    <div class="score-label">Richtig<br>صحيح</div>
+                    <div class="score-value" id="stats-correct-score">0</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-label">Falsch<br>خطأ</div>
+                    <div class="score-value" id="stats-incorrect-score">0</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-label">Gesamt<br>الإجمالي</div>
+                    <div class="score-value" id="stats-total-score">0</div>
+                </div>
             </div>
-            <div class="score-item">
-                <div class="score-label">Gesamt<br>الإجمالي</div>
-                <div class="score-value" id="total-score">0</div>
+
+            <div class="stats-content">
+                <!-- Correct Answers Section -->
+                <div class="stats-section">
+                    <div class="stats-section-title correct-section">
+                        ✓ Richtige Antworten / الإجابات الصحيحة (<span id="correct-count">0</span>)
+                    </div>
+                    <div class="stats-list" id="correct-list">
+                        <div class="stats-empty">Noch keine richtigen Antworten / لا توجد إجابات صحيحة بعد</div>
+                    </div>
+                </div>
+
+                <!-- Incorrect Answers Section -->
+                <div class="stats-section">
+                    <div class="stats-section-title incorrect-section">
+                        ✗ Falsche Antworten / الإجابات الخاطئة (<span id="incorrect-count">0</span>)
+                    </div>
+                    <div class="stats-list" id="incorrect-list">
+                        <div class="stats-empty">Noch keine falschen Antworten / لا توجد إجابات خاطئة بعد</div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="quiz-card" id="quiz-card">
-            <div class="arabic-word" id="arabic-word"></div>
-
-            <div class="article-buttons">
-                <button class="article-btn" data-article="der">der</button>
-                <button class="article-btn" data-article="die">die</button>
-                <button class="article-btn" data-article="das">das</button>
-            </div>
-
-            <input 
-                type="text" 
-                class="word-input" 
-                id="word-input" 
-                placeholder="Deutsche Wort / الكلمة الألمانية"
-                autocomplete="off"
-                autocorrect="off"
-                autocapitalize="off"
-                spellcheck="false"
-            >
-
-            <button class="submit-btn" id="submit-btn">Prüfen / تحقق</button>
-
-            <div class="feedback" id="feedback" style="display: none;"></div>
-
-            <div class="progress" id="progress"></div>
-        </div>
-
-        <button class="restart-btn" id="restart-btn">Neu starten / ابدأ من جديد</button>
     </div>
 
     <script>
@@ -555,6 +751,8 @@
         let incorrectCount = 0;
         let totalCount = 0;
         let usedWords = [];
+        let correctAnswers = [];
+        let incorrectAnswers = [];
 
         const arabicWordEl = document.getElementById('arabic-word');
         const wordInputEl = document.getElementById('word-input');
@@ -565,12 +763,28 @@
         const incorrectScoreEl = document.getElementById('incorrect-score');
         const totalScoreEl = document.getElementById('total-score');
         const restartBtn = document.getElementById('restart-btn');
+        const statsBtn = document.getElementById('stats-btn');
+        const backBtn = document.getElementById('back-btn');
         const articleBtns = document.querySelectorAll('.article-btn');
+        const quizPage = document.getElementById('quiz-page');
+        const statsPage = document.getElementById('stats-page');
 
         // Prevent zoom on iOS when focusing inputs
         function preventZoom() {
             const viewportMeta = document.querySelector('meta[name="viewport"]');
             viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+        }
+
+        // Page Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            
+            if (pageId === 'stats-page') {
+                updateStatsPage();
+            }
         }
 
         // Article button selection
@@ -649,12 +863,24 @@
 
             wordInputEl.className = 'word-input ' + (correctWord ? 'correct' : 'incorrect');
 
+            // Store answer for statistics
+            const answerRecord = {
+                question: currentQuestion,
+                userArticle: selectedArticle,
+                userWord: userWord,
+                correctArticle: correctArticle,
+                correctWord: correctWord,
+                timestamp: new Date().toLocaleTimeString('de-DE')
+            };
+
             if (isCorrect) {
                 correctCount++;
+                correctAnswers.push(answerRecord);
                 feedbackEl.className = 'feedback correct bounce';
                 feedbackEl.innerHTML = '✓ Richtig! / صحيح!';
             } else {
                 incorrectCount++;
+                incorrectAnswers.push(answerRecord);
                 feedbackEl.className = 'feedback incorrect shake';
                 let errorMsg = '✗ Falsch! / خطأ!';
                 if (!correctArticle && !correctWord) {
@@ -687,19 +913,79 @@
             progressEl.textContent = `${usedWords.length}/${vocabulary.length}`;
         }
 
+        // Update Statistics Page
+        function updateStatsPage() {
+            // Update scores in stats page
+            document.getElementById('stats-correct-score').textContent = correctCount;
+            document.getElementById('stats-incorrect-score').textContent = incorrectCount;
+            document.getElementById('stats-total-score').textContent = totalCount;
+            document.getElementById('correct-count').textContent = correctCount;
+            document.getElementById('incorrect-count').textContent = incorrectCount;
+
+            // Update correct answers list
+            const correctList = document.getElementById('correct-list');
+            if (correctAnswers.length === 0) {
+                correctList.innerHTML = '<div class="stats-empty">Noch keine richtigen Antworten / لا توجد إجابات صحيحة بعد</div>';
+            } else {
+                correctList.innerHTML = correctAnswers.map(answer => `
+                    <div class="stats-item correct-item">
+                        <div class="stats-item-left">
+                            <div class="stats-item-word">${answer.question.german}</div>
+                            <div class="stats-item-translation">${answer.question.arabic}</div>
+                            <div class="stats-item-answer">Deine Antwort: ${answer.userArticle} ${answer.userWord}</div>
+                        </div>
+                    </div>
+                `).reverse().join('');
+            }
+
+            // Update incorrect answers list
+            const incorrectList = document.getElementById('incorrect-list');
+            if (incorrectAnswers.length === 0) {
+                incorrectList.innerHTML = '<div class="stats-empty">Noch keine falschen Antworten / لا توجد إجابات خاطئة بعد</div>';
+            } else {
+                incorrectList.innerHTML = incorrectAnswers.map(answer => {
+                    let errorDetail = '';
+                    if (!answer.correctArticle && !answer.correctWord) {
+                        errorDetail = `Richtig: ${answer.question.german}`;
+                    } else if (!answer.correctArticle) {
+                        errorDetail = `Richtiger Artikel: ${answer.question.article}`;
+                    } else {
+                        errorDetail = `Richtiges Wort: ${answer.question.word}`;
+                    }
+                    
+                    return `
+                        <div class="stats-item incorrect-item">
+                            <div class="stats-item-left">
+                                <div class="stats-item-word">${answer.question.german}</div>
+                                <div class="stats-item-translation">${answer.question.arabic}</div>
+                                <div class="stats-item-answer">Deine Antwort: ${answer.userArticle} ${answer.userWord}</div>
+                                <div class="stats-item-answer" style="color: #f44336;">${errorDetail}</div>
+                            </div>
+                        </div>
+                    `;
+                }).reverse().join('');
+            }
+        }
+
         // Restart quiz
         function restart() {
-            correctCount = 0;
-            incorrectCount = 0;
-            totalCount = 0;
-            usedWords = [];
-            updateScores();
-            loadQuestion();
+            if (confirm('Möchten Sie wirklich neu starten? Alle Statistiken werden gelöscht. / هل تريد حقاً البدء من جديد؟ سيتم حذف جميع الإحصائيات.')) {
+                correctCount = 0;
+                incorrectCount = 0;
+                totalCount = 0;
+                usedWords = [];
+                correctAnswers = [];
+                incorrectAnswers = [];
+                updateScores();
+                loadQuestion();
+            }
         }
 
         // Event listeners
         submitBtn.addEventListener('click', checkAnswer);
         restartBtn.addEventListener('click', restart);
+        statsBtn.addEventListener('click', () => showPage('stats-page'));
+        backBtn.addEventListener('click', () => showPage('quiz-page'));
         
         wordInputEl.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !submitBtn.disabled) {
