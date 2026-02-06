@@ -23,27 +23,389 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 8px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
 
         .container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background: #ffffff;
             width: 100%;
-            max-width: 500px;
+            max-width: 600px;
             height: 100%;
-            max-height: calc(100vh - 16px);
-            max-height: calc(100dvh - 16px);
-            padding: 12px;
+            max-height: 100vh;
+            max-height: 100dvh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
 
-        /* Page System */
+        /* Header */
+        .header {
+            background: #fff;
+            padding: 12px 16px;
+            border-bottom: 2px solid #e5e5e5;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1cb0f6 0%, #58cc02 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stats-icon {
+            width: 36px;
+            height: 36px;
+            background: #58cc02;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .stats-icon:active {
+            transform: scale(0.9);
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            width: 100%;
+            height: 16px;
+            background: #e5e5e5;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #58cc02 0%, #78d916 100%);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* Score Pills */
+        .score-pills {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .score-pill {
+            flex: 1;
+            padding: 8px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .score-pill.correct {
+            background: #d7ffb8;
+            color: #58a700;
+        }
+
+        .score-pill.incorrect {
+            background: #ffdfe0;
+            color: #ea2b2b;
+        }
+
+        .score-pill.total {
+            background: #ddf4ff;
+            color: #1cb0f6;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Question Card */
+        .question-card {
+            background: #fff;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .question-text {
+            text-align: center;
+            font-size: 48px;
+            font-weight: 700;
+            color: #3c3c3c;
+            direction: rtl;
+            animation: slideIn 0.4s ease;
+            line-height: 1.2;
+        }
+
+        .question-prompt {
+            text-align: center;
+            font-size: 16px;
+            color: #777;
+            margin-bottom: -8px;
+        }
+
+        /* Article Buttons */
+        .article-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .article-btn {
+            padding: 18px;
+            border: 3px solid #e5e5e5;
+            background: white;
+            border-radius: 16px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            color: #3c3c3c;
+            position: relative;
+        }
+
+        .article-btn:hover {
+            background: #f7f7f7;
+            border-color: #d0d0d0;
+        }
+
+        .article-btn:active {
+            transform: scale(0.95);
+        }
+
+        .article-btn.selected {
+            border-color: #1cb0f6;
+            background: #ddf4ff;
+            color: #1cb0f6;
+        }
+
+        .article-btn.correct {
+            border-color: #58cc02;
+            background: #d7ffb8;
+            color: #58a700;
+            animation: correctPulse 0.6s ease;
+        }
+
+        .article-btn.incorrect {
+            border-color: #ea2b2b;
+            background: #ffdfe0;
+            color: #ea2b2b;
+            animation: shake 0.5s ease;
+        }
+
+        /* Input Field */
+        .word-input-container {
+            position: relative;
+        }
+
+        .word-input {
+            width: 100%;
+            padding: 18px 20px;
+            border: 3px solid #e5e5e5;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            background: white;
+            color: #3c3c3c;
+        }
+
+        .word-input:focus {
+            outline: none;
+            border-color: #1cb0f6;
+            background: #ddf4ff;
+        }
+
+        .word-input.correct {
+            border-color: #58cc02;
+            background: #d7ffb8;
+        }
+
+        .word-input.incorrect {
+            border-color: #ea2b2b;
+            background: #ffdfe0;
+        }
+
+        .word-input::placeholder {
+            color: #afafaf;
+            font-weight: 400;
+        }
+
+        /* Bottom Section */
+        .bottom-section {
+            background: white;
+            padding: 16px 20px;
+            border-top: 2px solid #e5e5e5;
+            flex-shrink: 0;
+        }
+
+        /* Check Button */
+        .check-btn {
+            width: 100%;
+            padding: 18px;
+            background: #58cc02;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 0 #46a302;
+        }
+
+        .check-btn:hover {
+            background: #5cd604;
+            box-shadow: 0 4px 0 #46a302;
+        }
+
+        .check-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #46a302;
+        }
+
+        .check-btn:disabled {
+            background: #e5e5e5;
+            color: #afafaf;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .check-btn:disabled:active {
+            transform: none;
+        }
+
+        /* Feedback Section */
+        .feedback-section {
+            background: white;
+            padding: 20px;
+            border-top: 2px solid #e5e5e5;
+            flex-shrink: 0;
+            display: none;
+        }
+
+        .feedback-section.show {
+            display: block;
+            animation: slideUp 0.3s ease;
+        }
+
+        .feedback-section.correct {
+            background: #d7ffb8;
+            border-top-color: #58cc02;
+        }
+
+        .feedback-section.incorrect {
+            background: #ffdfe0;
+            border-top-color: #ea2b2b;
+        }
+
+        .feedback-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .feedback-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .feedback-icon.correct {
+            background: #58cc02;
+            color: white;
+        }
+
+        .feedback-icon.incorrect {
+            background: #ea2b2b;
+            color: white;
+        }
+
+        .feedback-text {
+            flex: 1;
+        }
+
+        .feedback-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .feedback-title.correct {
+            color: #58a700;
+        }
+
+        .feedback-title.incorrect {
+            color: #ea2b2b;
+        }
+
+        .feedback-detail {
+            font-size: 16px;
+            color: #3c3c3c;
+            font-weight: 600;
+        }
+
+        .continue-btn {
+            width: 100%;
+            padding: 18px;
+            background: white;
+            color: #1cb0f6;
+            border: 3px solid #1cb0f6;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .continue-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Statistics Page */
         .page {
             display: none;
             flex-direction: column;
@@ -55,485 +417,334 @@
             display: flex;
         }
 
-        /* Header - Compact */
-        .header {
-            text-align: center;
-            margin-bottom: 8px;
-            flex-shrink: 0;
-        }
-
-        h1 {
-            color: #667eea;
-            font-size: 20px;
-            margin-bottom: 2px;
-            font-weight: 700;
-        }
-
-        .subtitle {
-            color: #764ba2;
-            font-size: 14px;
-            direction: rtl;
-        }
-
-        /* Score Board - Compact */
-        .score-board {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 8px;
-            padding: 10px 8px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
-            color: white;
-            flex-shrink: 0;
-        }
-
-        .score-item {
-            text-align: center;
-            flex: 1;
-        }
-
-        .score-label {
-            font-size: 10px;
-            opacity: 0.9;
-            margin-bottom: 2px;
-            line-height: 1.2;
-        }
-
-        .score-value {
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        /* Quiz Card - Flexible */
-        .quiz-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 12px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        .arabic-word {
-            text-align: center;
-            font-size: 32px;
-            color: #333;
-            margin-bottom: 12px;
-            direction: rtl;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        /* Article Buttons - Compact Grid */
-        .article-buttons {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 12px;
-            flex-shrink: 0;
-        }
-
-        .article-btn {
-            padding: 12px 8px;
-            border: 2px solid #e0e0e0;
-            background: white;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .article-btn:active {
-            transform: scale(0.95);
-        }
-
-        .article-btn.selected {
-            border-color: #667eea;
-            background: #667eea;
-            color: white;
-        }
-
-        .article-btn.correct {
-            border-color: #4caf50;
-            background: #4caf50;
-            color: white;
-        }
-
-        .article-btn.incorrect {
-            border-color: #f44336;
-            background: #f44336;
-            color: white;
-        }
-
-        /* Input Field - Compact */
-        .word-input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            margin-bottom: 12px;
-            transition: border-color 0.3s ease;
-            flex-shrink: 0;
-        }
-
-        .word-input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .word-input.correct {
-            border-color: #4caf50;
-            background: #e8f5e9;
-        }
-
-        .word-input.incorrect {
-            border-color: #f44336;
-            background: #ffebee;
-        }
-
-        /* Submit Button - Compact */
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            flex-shrink: 0;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .submit-btn:active {
-            transform: scale(0.98);
-        }
-
-        .submit-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-
-        /* Feedback - Compact */
-        .feedback {
-            margin-top: 8px;
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 14px;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        .feedback.correct {
-            background: #4caf50;
-            color: white;
-        }
-
-        .feedback.incorrect {
-            background: #f44336;
-            color: white;
-        }
-
-        .correct-answer {
-            margin-top: 6px;
-            font-size: 16px;
-            color: white;
-        }
-
-        /* Progress - Compact */
-        .progress {
-            margin-top: 8px;
-            text-align: center;
-            color: #666;
-            font-size: 11px;
-            flex-shrink: 0;
-        }
-
-        /* Action Buttons */
-        .action-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 8px;
-            flex-shrink: 0;
-        }
-
-        .restart-btn, .stats-btn {
-            padding: 10px;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .restart-btn {
-            background: #764ba2;
-        }
-
-        .stats-btn {
-            background: #ff6b6b;
-        }
-
-        .restart-btn:active, .stats-btn:active {
-            transform: scale(0.98);
-        }
-
-        /* Statistics Page */
         .stats-header {
+            background: #fff;
+            padding: 16px;
+            border-bottom: 2px solid #e5e5e5;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            gap: 16px;
             flex-shrink: 0;
-        }
-
-        .stats-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #667eea;
         }
 
         .back-btn {
-            padding: 8px 16px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: bold;
+            width: 36px;
+            height: 36px;
+            background: #e5e5e5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
+            border: none;
+            font-size: 20px;
+            color: #3c3c3c;
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
         }
 
         .back-btn:active {
-            transform: scale(0.95);
+            transform: scale(0.9);
         }
 
-        .stats-content {
+        .stats-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #3c3c3c;
+            flex: 1;
+        }
+
+        .stats-body {
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
+            padding: 16px;
         }
 
-        .stats-section {
-            margin-bottom: 16px;
+        .stats-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
-        .stats-section-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            padding: 8px;
-            border-radius: 6px;
-            color: white;
-        }
-
-        .stats-section-title.correct-section {
-            background: #4caf50;
-        }
-
-        .stats-section-title.incorrect-section {
-            background: #f44336;
-        }
-
-        .stats-list {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 8px;
-        }
-
-        .stats-item {
+        .stat-card {
             background: white;
-            padding: 10px;
-            margin-bottom: 6px;
-            border-radius: 6px;
-            border-left: 4px solid #e0e0e0;
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            border: 2px solid #e5e5e5;
+        }
+
+        .stat-card.correct {
+            border-color: #58cc02;
+            background: #d7ffb8;
+        }
+
+        .stat-card.incorrect {
+            border-color: #ea2b2b;
+            background: #ffdfe0;
+        }
+
+        .stat-card.total {
+            border-color: #1cb0f6;
+            background: #ddf4ff;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-number.correct {
+            color: #58a700;
+        }
+
+        .stat-number.incorrect {
+            color: #ea2b2b;
+        }
+
+        .stat-number.total {
+            color: #1cb0f6;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #777;
+            font-weight: 600;
+        }
+
+        .answers-section {
+            margin-bottom: 20px;
+        }
+
+        .answers-header {
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .answers-header.correct {
+            background: #58cc02;
+            color: white;
+        }
+
+        .answers-header.incorrect {
+            background: #ea2b2b;
+            color: white;
+        }
+
+        .answer-item {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 8px;
+            border: 2px solid #e5e5e5;
+        }
+
+        .answer-item.correct {
+            border-color: #58cc02;
+            background: #f7fff0;
+        }
+
+        .answer-item.incorrect {
+            border-color: #ea2b2b;
+            background: #fff5f5;
+        }
+
+        .answer-word {
+            font-size: 18px;
+            font-weight: 700;
+            color: #3c3c3c;
+            margin-bottom: 4px;
+        }
+
+        .answer-translation {
             font-size: 14px;
-        }
-
-        .stats-item.correct-item {
-            border-left-color: #4caf50;
-        }
-
-        .stats-item.incorrect-item {
-            border-left-color: #f44336;
-        }
-
-        .stats-item-word {
-            font-weight: bold;
-            color: #333;
-        }
-
-        .stats-item-translation {
-            color: #666;
+            color: #777;
             direction: rtl;
+            margin-bottom: 8px;
+        }
+
+        .answer-detail {
             font-size: 13px;
+            color: #3c3c3c;
+            padding: 8px;
+            background: #f7f7f7;
+            border-radius: 8px;
+            margin-top: 8px;
         }
 
-        .stats-item-answer {
-            font-size: 12px;
-            color: #999;
-            margin-top: 4px;
+        .answer-detail.error {
+            background: #ffdfe0;
+            color: #ea2b2b;
+            font-weight: 600;
         }
 
-        .stats-item-left {
-            flex: 1;
-        }
-
-        .stats-empty {
+        .empty-state {
             text-align: center;
-            padding: 20px;
-            color: #999;
-            font-size: 14px;
+            padding: 40px 20px;
+            color: #afafaf;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .empty-text {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* Action Buttons in Stats */
+        .stats-actions {
+            padding: 16px;
+            border-top: 2px solid #e5e5e5;
+            background: white;
+            flex-shrink: 0;
+        }
+
+        .restart-btn {
+            width: 100%;
+            padding: 18px;
+            background: #ff4b4b;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            text-transform: uppercase;
+            box-shadow: 0 4px 0 #d63636;
+        }
+
+        .restart-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #d63636;
         }
 
         /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            75% { transform: translateX(8px); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+            20%, 40%, 60%, 80% { transform: translateX(8px); }
         }
 
-        .shake {
-            animation: shake 0.4s;
+        @keyframes correctPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .bounce {
-            animation: bounce 0.4s;
-        }
-
-        /* Landscape Optimization */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .container {
-                padding: 8px;
-            }
-
-            h1 {
-                font-size: 16px;
-            }
-
-            .subtitle {
-                font-size: 11px;
-            }
-
-            .score-board {
-                padding: 6px;
-                margin-bottom: 6px;
-            }
-
-            .score-label {
-                font-size: 9px;
-            }
-
-            .score-value {
-                font-size: 16px;
-            }
-
-            .quiz-card {
-                padding: 8px;
-            }
-
-            .arabic-word {
-                font-size: 24px;
-                margin-bottom: 8px;
-            }
-
-            .article-buttons {
-                gap: 6px;
-                margin-bottom: 8px;
-            }
-
-            .article-btn {
-                padding: 8px 6px;
-                font-size: 14px;
-            }
-
-            .word-input {
-                padding: 8px;
-                font-size: 14px;
-                margin-bottom: 8px;
-            }
-
-            .submit-btn {
-                padding: 10px;
-                font-size: 14px;
-            }
-
-            .feedback {
-                padding: 6px;
-                font-size: 12px;
-                margin-top: 6px;
-            }
-
-            .correct-answer {
-                font-size: 13px;
-                margin-top: 4px;
-            }
-
-            .restart-btn, .stats-btn {
-                padding: 8px;
-                font-size: 12px;
-            }
-
-            .progress {
-                font-size: 10px;
-                margin-top: 6px;
-            }
-
-            .stats-title {
-                font-size: 16px;
-            }
-
-            .stats-item {
-                padding: 8px;
-                font-size: 12px;
-            }
-        }
-
-        /* Very Small Screens */
+        /* Responsive */
         @media (max-height: 600px) {
-            .arabic-word {
-                font-size: 28px;
-                margin-bottom: 10px;
+            .question-text {
+                font-size: 36px;
             }
-
-            .score-value {
+            
+            .main-content {
+                padding: 16px;
+            }
+            
+            .question-card {
+                gap: 16px;
+            }
+            
+            .article-btn {
+                padding: 14px;
                 font-size: 18px;
             }
-
-            .article-btn {
-                padding: 10px 6px;
+            
+            .word-input {
+                padding: 14px 16px;
+                font-size: 16px;
             }
         }
 
-        /* Prevent iOS zoom on input focus */
-        @media screen and (max-width: 767px) {
-            input[type="text"] {
-                font-size: 16px !important;
+        @media (max-height: 500px) and (orientation: landscape) {
+            .header {
+                padding: 8px 16px;
+            }
+            
+            .progress-bar-container {
+                height: 12px;
+                margin-top: 8px;
+            }
+            
+            .score-pills {
+                margin-top: 6px;
+            }
+            
+            .score-pill {
+                padding: 6px;
+                font-size: 12px;
+            }
+            
+            .main-content {
+                padding: 12px;
+            }
+            
+            .question-text {
+                font-size: 28px;
+            }
+            
+            .question-card {
+                gap: 12px;
+            }
+            
+            .article-buttons {
+                gap: 8px;
+            }
+            
+            .article-btn {
+                padding: 12px;
+                font-size: 16px;
+            }
+            
+            .word-input {
+                padding: 12px;
+                font-size: 15px;
+            }
+            
+            .bottom-section {
+                padding: 12px 16px;
+            }
+            
+            .check-btn {
+                padding: 14px;
+                font-size: 16px;
             }
         }
     </style>
@@ -542,101 +753,118 @@
     <div class="container">
         <!-- QUIZ PAGE -->
         <div class="page active" id="quiz-page">
+            <!-- Header -->
             <div class="header">
-                <h1>Deutsch Mit Radouane</h1>
-                <p class="subtitle">تعلم أدوات التعريف الألمانية</p>
+                <div class="header-content">
+                    <div class="logo">Deutsch Mit Radouane</div>
+                    <div class="stats-icon" id="stats-btn">📊</div>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="progress-bar"></div>
+                </div>
+                <div class="score-pills">
+                    <div class="score-pill correct">
+                        ✓ <span id="correct-score">0</span>
+                    </div>
+                    <div class="score-pill incorrect">
+                        ✗ <span id="incorrect-score">0</span>
+                    </div>
+                    <div class="score-pill total">
+                        ∑ <span id="total-score">0</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="score-board">
-                <div class="score-item">
-                    <div class="score-label">Richtig<br>صحيح</div>
-                    <div class="score-value" id="correct-score">0</div>
-                </div>
-                <div class="score-item">
-                    <div class="score-label">Falsch<br>خطأ</div>
-                    <div class="score-value" id="incorrect-score">0</div>
-                </div>
-                <div class="score-item">
-                    <div class="score-label">Gesamt<br>الإجمالي</div>
-                    <div class="score-value" id="total-score">0</div>
+            <!-- Main Content -->
+            <div class="main-content">
+                <div class="question-card">
+                    <div class="question-prompt">اختر الأداة و اكتب الكلمة</div>
+                    <div class="question-text" id="question-text"></div>
+                    
+                    <div class="article-buttons">
+                        <button class="article-btn" data-article="der">der</button>
+                        <button class="article-btn" data-article="die">die</button>
+                        <button class="article-btn" data-article="das">das</button>
+                    </div>
+
+                    <div class="word-input-container">
+                        <input 
+                            type="text" 
+                            class="word-input" 
+                            id="word-input" 
+                            placeholder="Schreiben Sie hier..."
+                            autocomplete="off"
+                            autocorrect="off"
+                            autocapitalize="off"
+                            spellcheck="false"
+                        >
+                    </div>
                 </div>
             </div>
 
-            <div class="quiz-card" id="quiz-card">
-                <div class="arabic-word" id="arabic-word"></div>
-
-                <div class="article-buttons">
-                    <button class="article-btn" data-article="der">der</button>
-                    <button class="article-btn" data-article="die">die</button>
-                    <button class="article-btn" data-article="das">das</button>
-                </div>
-
-                <input 
-                    type="text" 
-                    class="word-input" 
-                    id="word-input" 
-                    placeholder="Deutsche Wort / الكلمة الألمانية"
-                    autocomplete="off"
-                    autocorrect="off"
-                    autocapitalize="off"
-                    spellcheck="false"
-                >
-
-                <button class="submit-btn" id="submit-btn">Prüfen / تحقق</button>
-
-                <div class="feedback" id="feedback" style="display: none;"></div>
-
-                <div class="progress" id="progress"></div>
+            <!-- Bottom Section -->
+            <div class="bottom-section" id="check-section">
+                <button class="check-btn" id="check-btn" disabled>Prüfen</button>
             </div>
 
-            <div class="action-buttons">
-                <button class="restart-btn" id="restart-btn">Neu starten / ابدأ من جديد</button>
-                <button class="stats-btn" id="stats-btn">Statistik / إحصائيات</button>
+            <!-- Feedback Section -->
+            <div class="feedback-section" id="feedback-section">
+                <div class="feedback-content">
+                    <div class="feedback-icon" id="feedback-icon"></div>
+                    <div class="feedback-text">
+                        <div class="feedback-title" id="feedback-title"></div>
+                        <div class="feedback-detail" id="feedback-detail"></div>
+                    </div>
+                </div>
+                <button class="continue-btn" id="continue-btn">Weiter</button>
             </div>
         </div>
 
         <!-- STATISTICS PAGE -->
         <div class="page" id="stats-page">
             <div class="stats-header">
-                <div class="stats-title">Statistik / إحصائيات</div>
-                <button class="back-btn" id="back-btn">← Zurück / عودة</button>
+                <button class="back-btn" id="back-btn">←</button>
+                <div class="stats-title">Deine Statistik</div>
             </div>
 
-            <div class="score-board">
-                <div class="score-item">
-                    <div class="score-label">Richtig<br>صحيح</div>
-                    <div class="score-value" id="stats-correct-score">0</div>
+            <div class="stats-body">
+                <!-- Summary Cards -->
+                <div class="stats-summary">
+                    <div class="stat-card correct">
+                        <div class="stat-number correct" id="stats-correct">0</div>
+                        <div class="stat-label">Richtig</div>
+                    </div>
+                    <div class="stat-card incorrect">
+                        <div class="stat-number incorrect" id="stats-incorrect">0</div>
+                        <div class="stat-label">Falsch</div>
+                    </div>
+                    <div class="stat-card total">
+                        <div class="stat-number total" id="stats-total">0</div>
+                        <div class="stat-label">Gesamt</div>
+                    </div>
                 </div>
-                <div class="score-item">
-                    <div class="score-label">Falsch<br>خطأ</div>
-                    <div class="score-value" id="stats-incorrect-score">0</div>
+
+                <!-- Correct Answers -->
+                <div class="answers-section">
+                    <div class="answers-header correct">
+                        <span>✓ Richtige Antworten</span>
+                        <span id="correct-count">0</span>
+                    </div>
+                    <div id="correct-list"></div>
                 </div>
-                <div class="score-item">
-                    <div class="score-label">Gesamt<br>الإجمالي</div>
-                    <div class="score-value" id="stats-total-score">0</div>
+
+                <!-- Incorrect Answers -->
+                <div class="answers-section">
+                    <div class="answers-header incorrect">
+                        <span>✗ Falsche Antworten</span>
+                        <span id="incorrect-count">0</span>
+                    </div>
+                    <div id="incorrect-list"></div>
                 </div>
             </div>
 
-            <div class="stats-content">
-                <!-- Correct Answers Section -->
-                <div class="stats-section">
-                    <div class="stats-section-title correct-section">
-                        ✓ Richtige Antworten / الإجابات الصحيحة (<span id="correct-count">0</span>)
-                    </div>
-                    <div class="stats-list" id="correct-list">
-                        <div class="stats-empty">Noch keine richtigen Antworten / لا توجد إجابات صحيحة بعد</div>
-                    </div>
-                </div>
-
-                <!-- Incorrect Answers Section -->
-                <div class="stats-section">
-                    <div class="stats-section-title incorrect-section">
-                        ✗ Falsche Antworten / الإجابات الخاطئة (<span id="incorrect-count">0</span>)
-                    </div>
-                    <div class="stats-list" id="incorrect-list">
-                        <div class="stats-empty">Noch keine falschen Antworten / لا توجد إجابات خاطئة بعد</div>
-                    </div>
-                </div>
+            <div class="stats-actions">
+                <button class="restart-btn" id="restart-btn">Neu Starten</button>
             </div>
         </div>
     </div>
@@ -745,6 +973,7 @@
             { german: "die Erfahrung", arabic: "الخبرة", article: "die", word: "Erfahrung" }
         ];
 
+        // State
         let currentQuestion = null;
         let selectedArticle = null;
         let correctCount = 0;
@@ -754,49 +983,51 @@
         let correctAnswers = [];
         let incorrectAnswers = [];
 
-        const arabicWordEl = document.getElementById('arabic-word');
-        const wordInputEl = document.getElementById('word-input');
-        const submitBtn = document.getElementById('submit-btn');
-        const feedbackEl = document.getElementById('feedback');
-        const progressEl = document.getElementById('progress');
+        // Elements
+        const questionText = document.getElementById('question-text');
+        const wordInput = document.getElementById('word-input');
+        const checkBtn = document.getElementById('check-btn');
+        const checkSection = document.getElementById('check-section');
+        const feedbackSection = document.getElementById('feedback-section');
+        const feedbackIcon = document.getElementById('feedback-icon');
+        const feedbackTitle = document.getElementById('feedback-title');
+        const feedbackDetail = document.getElementById('feedback-detail');
+        const continueBtn = document.getElementById('continue-btn');
+        const progressBar = document.getElementById('progress-bar');
         const correctScoreEl = document.getElementById('correct-score');
         const incorrectScoreEl = document.getElementById('incorrect-score');
         const totalScoreEl = document.getElementById('total-score');
-        const restartBtn = document.getElementById('restart-btn');
+        const articleBtns = document.querySelectorAll('.article-btn');
         const statsBtn = document.getElementById('stats-btn');
         const backBtn = document.getElementById('back-btn');
-        const articleBtns = document.querySelectorAll('.article-btn');
+        const restartBtn = document.getElementById('restart-btn');
         const quizPage = document.getElementById('quiz-page');
         const statsPage = document.getElementById('stats-page');
 
-        // Prevent zoom on iOS when focusing inputs
-        function preventZoom() {
-            const viewportMeta = document.querySelector('meta[name="viewport"]');
-            viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
-        }
-
-        // Page Navigation
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
-            
-            if (pageId === 'stats-page') {
-                updateStatsPage();
-            }
-        }
-
-        // Article button selection
+        // Article Selection
         articleBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 articleBtns.forEach(b => b.classList.remove('selected'));
                 btn.classList.add('selected');
                 selectedArticle = btn.dataset.article;
+                updateCheckButton();
             });
         });
 
-        // Load new question
+        // Input Handler
+        wordInput.addEventListener('input', updateCheckButton);
+        wordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !checkBtn.disabled) {
+                checkAnswer();
+            }
+        });
+
+        // Update Check Button State
+        function updateCheckButton() {
+            checkBtn.disabled = !selectedArticle || !wordInput.value.trim();
+        }
+
+        // Load Question
         function loadQuestion() {
             if (usedWords.length === vocabulary.length) {
                 usedWords = [];
@@ -809,21 +1040,26 @@
             let originalIndex = vocabulary.indexOf(currentQuestion);
             usedWords.push(originalIndex);
 
-            arabicWordEl.textContent = currentQuestion.arabic;
-            wordInputEl.value = '';
-            wordInputEl.className = 'word-input';
-            feedbackEl.style.display = 'none';
+            questionText.textContent = currentQuestion.arabic;
+            wordInput.value = '';
+            wordInput.className = 'word-input';
             selectedArticle = null;
             
             articleBtns.forEach(btn => {
                 btn.className = 'article-btn';
             });
 
-            submitBtn.disabled = false;
+            checkSection.style.display = 'block';
+            feedbackSection.classList.remove('show', 'correct', 'incorrect');
+            
+            updateCheckButton();
             updateProgress();
+            
+            // Focus input
+            setTimeout(() => wordInput.focus(), 100);
         }
 
-        // Normalize German text for comparison
+        // Normalize Text
         function normalizeGerman(text) {
             return text.trim()
                 .toLowerCase()
@@ -833,26 +1069,18 @@
                 .replace(/ß/g, 'ss');
         }
 
-        // Check answer
+        // Check Answer
         function checkAnswer() {
-            if (!selectedArticle) {
-                alert('Bitte wählen Sie einen Artikel! / الرجاء اختيار أداة تعريف!');
-                return;
-            }
+            if (!selectedArticle || !wordInput.value.trim()) return;
 
-            const userWord = wordInputEl.value.trim();
-            if (!userWord) {
-                alert('Bitte geben Sie ein Wort ein! / الرجاء إدخال كلمة!');
-                return;
-            }
-
-            submitBtn.disabled = true;
+            const userWord = wordInput.value.trim();
             totalCount++;
 
             const correctArticle = selectedArticle === currentQuestion.article;
             const correctWord = normalizeGerman(userWord) === normalizeGerman(currentQuestion.word);
             const isCorrect = correctArticle && correctWord;
 
+            // Update UI
             articleBtns.forEach(btn => {
                 if (btn.dataset.article === currentQuestion.article) {
                     btn.classList.add('correct');
@@ -861,115 +1089,131 @@
                 }
             });
 
-            wordInputEl.className = 'word-input ' + (correctWord ? 'correct' : 'incorrect');
+            wordInput.className = 'word-input ' + (correctWord ? 'correct' : 'incorrect');
 
-            // Store answer for statistics
+            // Store answer
             const answerRecord = {
                 question: currentQuestion,
                 userArticle: selectedArticle,
                 userWord: userWord,
                 correctArticle: correctArticle,
-                correctWord: correctWord,
-                timestamp: new Date().toLocaleTimeString('de-DE')
+                correctWord: correctWord
             };
 
             if (isCorrect) {
                 correctCount++;
                 correctAnswers.push(answerRecord);
-                feedbackEl.className = 'feedback correct bounce';
-                feedbackEl.innerHTML = '✓ Richtig! / صحيح!';
+                
+                feedbackSection.className = 'feedback-section show correct';
+                feedbackIcon.className = 'feedback-icon correct';
+                feedbackIcon.textContent = '✓';
+                feedbackTitle.className = 'feedback-title correct';
+                feedbackTitle.textContent = 'Ausgezeichnet!';
+                feedbackDetail.textContent = currentQuestion.german;
             } else {
                 incorrectCount++;
                 incorrectAnswers.push(answerRecord);
-                feedbackEl.className = 'feedback incorrect shake';
-                let errorMsg = '✗ Falsch! / خطأ!';
+                
+                feedbackSection.className = 'feedback-section show incorrect';
+                feedbackIcon.className = 'feedback-icon incorrect';
+                feedbackIcon.textContent = '✗';
+                feedbackTitle.className = 'feedback-title incorrect';
+                feedbackTitle.textContent = 'Nicht ganz richtig';
+                
                 if (!correctArticle && !correctWord) {
-                    errorMsg += '<div class="correct-answer">' + currentQuestion.german + '</div>';
+                    feedbackDetail.textContent = 'Richtige Antwort: ' + currentQuestion.german;
                 } else if (!correctArticle) {
-                    errorMsg += '<div class="correct-answer">Artikel: ' + currentQuestion.article + '</div>';
+                    feedbackDetail.textContent = 'Richtiger Artikel: ' + currentQuestion.article;
                 } else {
-                    errorMsg += '<div class="correct-answer">Wort: ' + currentQuestion.word + '</div>';
+                    feedbackDetail.textContent = 'Richtiges Wort: ' + currentQuestion.word;
                 }
-                feedbackEl.innerHTML = errorMsg;
             }
 
-            feedbackEl.style.display = 'block';
+            checkSection.style.display = 'none';
             updateScores();
-
-            setTimeout(() => {
-                loadQuestion();
-            }, 2500);
         }
 
-        // Update scores
+        // Update Scores
         function updateScores() {
             correctScoreEl.textContent = correctCount;
             incorrectScoreEl.textContent = incorrectCount;
             totalScoreEl.textContent = totalCount;
         }
 
-        // Update progress
+        // Update Progress
         function updateProgress() {
-            progressEl.textContent = `${usedWords.length}/${vocabulary.length}`;
+            const percent = (usedWords.length / vocabulary.length) * 100;
+            progressBar.style.width = percent + '%';
         }
 
-        // Update Statistics Page
+        // Continue to Next Question
+        continueBtn.addEventListener('click', loadQuestion);
+
+        // Show Stats Page
+        function showStatsPage() {
+            statsPage.classList.add('active');
+            quizPage.classList.remove('active');
+            updateStatsPage();
+        }
+
+        // Show Quiz Page
+        function showQuizPage() {
+            quizPage.classList.add('active');
+            statsPage.classList.remove('active');
+        }
+
+        // Update Stats Page
         function updateStatsPage() {
-            // Update scores in stats page
-            document.getElementById('stats-correct-score').textContent = correctCount;
-            document.getElementById('stats-incorrect-score').textContent = incorrectCount;
-            document.getElementById('stats-total-score').textContent = totalCount;
+            document.getElementById('stats-correct').textContent = correctCount;
+            document.getElementById('stats-incorrect').textContent = incorrectCount;
+            document.getElementById('stats-total').textContent = totalCount;
             document.getElementById('correct-count').textContent = correctCount;
             document.getElementById('incorrect-count').textContent = incorrectCount;
 
-            // Update correct answers list
+            // Correct answers
             const correctList = document.getElementById('correct-list');
             if (correctAnswers.length === 0) {
-                correctList.innerHTML = '<div class="stats-empty">Noch keine richtigen Antworten / لا توجد إجابات صحيحة بعد</div>';
+                correctList.innerHTML = '<div class="empty-state"><div class="empty-icon">🎯</div><div class="empty-text">Noch keine richtigen Antworten</div></div>';
             } else {
-                correctList.innerHTML = correctAnswers.map(answer => `
-                    <div class="stats-item correct-item">
-                        <div class="stats-item-left">
-                            <div class="stats-item-word">${answer.question.german}</div>
-                            <div class="stats-item-translation">${answer.question.arabic}</div>
-                            <div class="stats-item-answer">Deine Antwort: ${answer.userArticle} ${answer.userWord}</div>
-                        </div>
+                correctList.innerHTML = correctAnswers.map(a => `
+                    <div class="answer-item correct">
+                        <div class="answer-word">${a.question.german}</div>
+                        <div class="answer-translation">${a.question.arabic}</div>
+                        <div class="answer-detail">Deine Antwort: ${a.userArticle} ${a.userWord}</div>
                     </div>
                 `).reverse().join('');
             }
 
-            // Update incorrect answers list
+            // Incorrect answers
             const incorrectList = document.getElementById('incorrect-list');
             if (incorrectAnswers.length === 0) {
-                incorrectList.innerHTML = '<div class="stats-empty">Noch keine falschen Antworten / لا توجد إجابات خاطئة بعد</div>';
+                incorrectList.innerHTML = '<div class="empty-state"><div class="empty-icon">💪</div><div class="empty-text">Noch keine falschen Antworten</div></div>';
             } else {
-                incorrectList.innerHTML = incorrectAnswers.map(answer => {
-                    let errorDetail = '';
-                    if (!answer.correctArticle && !answer.correctWord) {
-                        errorDetail = `Richtig: ${answer.question.german}`;
-                    } else if (!answer.correctArticle) {
-                        errorDetail = `Richtiger Artikel: ${answer.question.article}`;
+                incorrectList.innerHTML = incorrectAnswers.map(a => {
+                    let error = '';
+                    if (!a.correctArticle && !a.correctWord) {
+                        error = `Richtig: ${a.question.german}`;
+                    } else if (!a.correctArticle) {
+                        error = `Richtiger Artikel: ${a.question.article}`;
                     } else {
-                        errorDetail = `Richtiges Wort: ${answer.question.word}`;
+                        error = `Richtiges Wort: ${a.question.word}`;
                     }
                     
                     return `
-                        <div class="stats-item incorrect-item">
-                            <div class="stats-item-left">
-                                <div class="stats-item-word">${answer.question.german}</div>
-                                <div class="stats-item-translation">${answer.question.arabic}</div>
-                                <div class="stats-item-answer">Deine Antwort: ${answer.userArticle} ${answer.userWord}</div>
-                                <div class="stats-item-answer" style="color: #f44336;">${errorDetail}</div>
-                            </div>
+                        <div class="answer-item incorrect">
+                            <div class="answer-word">${a.question.german}</div>
+                            <div class="answer-translation">${a.question.arabic}</div>
+                            <div class="answer-detail">Deine Antwort: ${a.userArticle} ${a.userWord}</div>
+                            <div class="answer-detail error">${error}</div>
                         </div>
                     `;
                 }).reverse().join('');
             }
         }
 
-        // Restart quiz
+        // Restart
         function restart() {
-            if (confirm('Möchten Sie wirklich neu starten? Alle Statistiken werden gelöscht. / هل تريد حقاً البدء من جديد؟ سيتم حذف جميع الإحصائيات.')) {
+            if (confirm('Möchten Sie wirklich neu starten? Alle Statistiken werden gelöscht.')) {
                 correctCount = 0;
                 incorrectCount = 0;
                 totalCount = 0;
@@ -977,31 +1221,18 @@
                 correctAnswers = [];
                 incorrectAnswers = [];
                 updateScores();
+                showQuizPage();
                 loadQuestion();
             }
         }
 
-        // Event listeners
-        submitBtn.addEventListener('click', checkAnswer);
+        // Event Listeners
+        statsBtn.addEventListener('click', showStatsPage);
+        backBtn.addEventListener('click', showQuizPage);
         restartBtn.addEventListener('click', restart);
-        statsBtn.addEventListener('click', () => showPage('stats-page'));
-        backBtn.addEventListener('click', () => showPage('quiz-page'));
-        
-        wordInputEl.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !submitBtn.disabled) {
-                checkAnswer();
-            }
-        });
-
-        // Handle keyboard visibility on mobile
-        wordInputEl.addEventListener('focus', () => {
-            setTimeout(() => {
-                wordInputEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 300);
-        });
+        checkBtn.addEventListener('click', checkAnswer);
 
         // Initialize
-        preventZoom();
         loadQuestion();
     </script>
 </body>
