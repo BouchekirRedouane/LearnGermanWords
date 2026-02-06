@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Deutsch Artikel Lernen - تعلم أدوات التعريف الألمانية</title>
+    <title>Deutsch Mit Radouane - تعلم الألمانية مع رضوان</title>
     <style>
         * {
             margin: 0;
@@ -23,389 +23,24 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #ffffff;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
 
         .container {
             background: #ffffff;
             width: 100%;
-            max-width: 600px;
+            max-width: 480px;
             height: 100%;
             max-height: 100vh;
             max-height: 100dvh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
-        /* Header */
-        .header {
-            background: #fff;
-            padding: 12px 16px;
-            border-bottom: 2px solid #e5e5e5;
-            flex-shrink: 0;
-            position: relative;
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            font-size: 18px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #1cb0f6 0%, #58cc02 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stats-icon {
-            width: 36px;
-            height: 36px;
-            background: #58cc02;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-            cursor: pointer;
-            transition: transform 0.2s;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .stats-icon:active {
-            transform: scale(0.9);
-        }
-
-        /* Progress Bar */
-        .progress-bar-container {
-            width: 100%;
-            height: 16px;
-            background: #e5e5e5;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 12px;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #58cc02 0%, #78d916 100%);
-            border-radius: 10px;
-            transition: width 0.5s ease;
-            width: 0%;
-        }
-
-        /* Score Pills */
-        .score-pills {
-            display: flex;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .score-pill {
-            flex: 1;
-            padding: 8px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 14px;
-        }
-
-        .score-pill.correct {
-            background: #d7ffb8;
-            color: #58a700;
-        }
-
-        .score-pill.incorrect {
-            background: #ffdfe0;
-            color: #ea2b2b;
-        }
-
-        .score-pill.total {
-            background: #ddf4ff;
-            color: #1cb0f6;
-        }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Question Card */
-        .question-card {
-            background: #fff;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 24px;
-        }
-
-        .question-text {
-            text-align: center;
-            font-size: 48px;
-            font-weight: 700;
-            color: #3c3c3c;
-            direction: rtl;
-            animation: slideIn 0.4s ease;
-            line-height: 1.2;
-        }
-
-        .question-prompt {
-            text-align: center;
-            font-size: 16px;
-            color: #777;
-            margin-bottom: -8px;
-        }
-
-        /* Article Buttons */
-        .article-buttons {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
-
-        .article-btn {
-            padding: 18px;
-            border: 3px solid #e5e5e5;
-            background: white;
-            border-radius: 16px;
-            font-size: 20px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-            color: #3c3c3c;
-            position: relative;
-        }
-
-        .article-btn:hover {
-            background: #f7f7f7;
-            border-color: #d0d0d0;
-        }
-
-        .article-btn:active {
-            transform: scale(0.95);
-        }
-
-        .article-btn.selected {
-            border-color: #1cb0f6;
-            background: #ddf4ff;
-            color: #1cb0f6;
-        }
-
-        .article-btn.correct {
-            border-color: #58cc02;
-            background: #d7ffb8;
-            color: #58a700;
-            animation: correctPulse 0.6s ease;
-        }
-
-        .article-btn.incorrect {
-            border-color: #ea2b2b;
-            background: #ffdfe0;
-            color: #ea2b2b;
-            animation: shake 0.5s ease;
-        }
-
-        /* Input Field */
-        .word-input-container {
-            position: relative;
-        }
-
-        .word-input {
-            width: 100%;
-            padding: 18px 20px;
-            border: 3px solid #e5e5e5;
-            border-radius: 16px;
-            font-size: 18px;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            background: white;
-            color: #3c3c3c;
-        }
-
-        .word-input:focus {
-            outline: none;
-            border-color: #1cb0f6;
-            background: #ddf4ff;
-        }
-
-        .word-input.correct {
-            border-color: #58cc02;
-            background: #d7ffb8;
-        }
-
-        .word-input.incorrect {
-            border-color: #ea2b2b;
-            background: #ffdfe0;
-        }
-
-        .word-input::placeholder {
-            color: #afafaf;
-            font-weight: 400;
-        }
-
-        /* Bottom Section */
-        .bottom-section {
-            background: white;
-            padding: 16px 20px;
-            border-top: 2px solid #e5e5e5;
-            flex-shrink: 0;
-        }
-
-        /* Check Button */
-        .check-btn {
-            width: 100%;
-            padding: 18px;
-            background: #58cc02;
-            color: white;
-            border: none;
-            border-radius: 16px;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 0 #46a302;
-        }
-
-        .check-btn:hover {
-            background: #5cd604;
-            box-shadow: 0 4px 0 #46a302;
-        }
-
-        .check-btn:active {
-            transform: translateY(3px);
-            box-shadow: 0 1px 0 #46a302;
-        }
-
-        .check-btn:disabled {
-            background: #e5e5e5;
-            color: #afafaf;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        .check-btn:disabled:active {
-            transform: none;
-        }
-
-        /* Feedback Section */
-        .feedback-section {
-            background: white;
-            padding: 20px;
-            border-top: 2px solid #e5e5e5;
-            flex-shrink: 0;
-            display: none;
-        }
-
-        .feedback-section.show {
-            display: block;
-            animation: slideUp 0.3s ease;
-        }
-
-        .feedback-section.correct {
-            background: #d7ffb8;
-            border-top-color: #58cc02;
-        }
-
-        .feedback-section.incorrect {
-            background: #ffdfe0;
-            border-top-color: #ea2b2b;
-        }
-
-        .feedback-content {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-
-        .feedback-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            flex-shrink: 0;
-        }
-
-        .feedback-icon.correct {
-            background: #58cc02;
-            color: white;
-        }
-
-        .feedback-icon.incorrect {
-            background: #ea2b2b;
-            color: white;
-        }
-
-        .feedback-text {
-            flex: 1;
-        }
-
-        .feedback-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .feedback-title.correct {
-            color: #58a700;
-        }
-
-        .feedback-title.incorrect {
-            color: #ea2b2b;
-        }
-
-        .feedback-detail {
-            font-size: 16px;
-            color: #3c3c3c;
-            font-weight: 600;
-        }
-
-        .continue-btn {
-            width: 100%;
-            padding: 18px;
-            background: white;
-            color: #1cb0f6;
-            border: 3px solid #1cb0f6;
-            border-radius: 16px;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-            text-transform: uppercase;
-        }
-
-        .continue-btn:active {
-            transform: scale(0.98);
-        }
-
-        /* Statistics Page */
+        /* Page System */
         .page {
             display: none;
             flex-direction: column;
@@ -415,229 +50,663 @@
 
         .page.active {
             display: flex;
+            animation: fadeIn 0.3s ease;
         }
 
-        .stats-header {
-            background: #fff;
-            padding: 16px;
-            border-bottom: 2px solid #e5e5e5;
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 16px 20px 20px 20px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-top {
             display: flex;
             align-items: center;
-            gap: 16px;
-            flex-shrink: 0;
+            justify-content: space-between;
+            margin-bottom: 16px;
         }
 
-        .back-btn {
-            width: 36px;
-            height: 36px;
-            background: #e5e5e5;
-            border-radius: 50%;
+        .branding {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-subtitle {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.85);
+            direction: rtl;
+            margin-top: 2px;
+        }
+
+        .stats-btn {
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            border: none;
-            font-size: 20px;
-            color: #3c3c3c;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
         }
 
-        .back-btn:active {
+        .stats-btn:active {
             transform: scale(0.9);
+            background: rgba(255, 255, 255, 0.3);
         }
 
-        .stats-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #3c3c3c;
-            flex: 1;
-        }
-
-        .stats-body {
-            flex: 1;
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding: 16px;
-        }
-
-        .stats-summary {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .stat-card {
-            background: white;
+        /* Progress Section */
+        .progress-section {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
             border-radius: 16px;
-            padding: 16px;
-            text-align: center;
-            border: 2px solid #e5e5e5;
+            padding: 12px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .stat-card.correct {
-            border-color: #58cc02;
-            background: #d7ffb8;
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
         }
 
-        .stat-card.incorrect {
-            border-color: #ea2b2b;
-            background: #ffdfe0;
-        }
-
-        .stat-card.total {
-            border-color: #1cb0f6;
-            background: #ddf4ff;
-        }
-
-        .stat-number {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .stat-number.correct {
-            color: #58a700;
-        }
-
-        .stat-number.incorrect {
-            color: #ea2b2b;
-        }
-
-        .stat-number.total {
-            color: #1cb0f6;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: #777;
+        .progress-text {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.9);
             font-weight: 600;
         }
 
-        .answers-section {
-            margin-bottom: 20px;
+        .progress-count {
+            font-size: 13px;
+            color: #ffffff;
+            font-weight: 700;
         }
 
-        .answers-header {
-            padding: 12px 16px;
-            border-radius: 12px;
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 10px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0%;
+            box-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
+        }
+
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .score-box {
+            text-align: center;
+            padding: 6px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .score-value {
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            display: block;
+        }
+
+        .score-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Question Area */
+        .question-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 28px;
+        }
+
+        .question-label {
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .arabic-text {
+            text-align: center;
+            font-size: 42px;
+            font-weight: 800;
+            color: #2d3748;
+            direction: rtl;
+            line-height: 1.3;
+            animation: slideDown 0.4s ease;
+        }
+
+        /* Answer Section */
+        .answer-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .article-option {
+            padding: 16px;
+            background: #f8f9fa;
+            border: 3px solid #e9ecef;
+            border-radius: 14px;
+            font-size: 18px;
             font-weight: 700;
+            color: #495057;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .article-option span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .article-option:active {
+            transform: scale(0.95);
+        }
+
+        .article-option.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .article-option.selected::before {
+            opacity: 1;
+        }
+
+        .article-option.correct {
+            border-color: #28a745;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: #ffffff;
+            animation: successPulse 0.5s ease;
+        }
+
+        .article-option.wrong {
+            border-color: #dc3545;
+            background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
+            color: #ffffff;
+            animation: errorShake 0.4s ease;
+        }
+
+        .word-input-wrapper {
+            position: relative;
+        }
+
+        .word-input {
+            width: 100%;
+            padding: 18px 20px;
+            border: 3px solid #e9ecef;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 600;
+            color: #2d3748;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .word-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .word-input.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .word-input.wrong {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .word-input::placeholder {
+            color: #adb5bd;
+        }
+
+        /* Bottom Actions */
+        .bottom-actions {
+            background: #ffffff;
+            padding: 16px 20px;
+            border-top: 1px solid #e9ecef;
+            flex-shrink: 0;
+        }
+
+        .check-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .check-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .check-button:disabled {
+            background: #dee2e6;
+            color: #adb5bd;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .check-button:disabled:active {
+            transform: none;
+        }
+
+        /* Feedback Panel */
+        .feedback-panel {
+            background: #ffffff;
+            padding: 20px;
+            border-top: 3px solid #e9ecef;
+            flex-shrink: 0;
+            display: none;
+        }
+
+        .feedback-panel.show {
+            display: block;
+            animation: slideUpFade 0.3s ease;
+        }
+
+        .feedback-panel.success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-top-color: #28a745;
+        }
+
+        .feedback-panel.error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            border-top-color: #dc3545;
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .feedback-emoji {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .feedback-emoji.success {
+            background: #28a745;
+        }
+
+        .feedback-emoji.error {
+            background: #dc3545;
+        }
+
+        .feedback-message {
+            flex: 1;
+        }
+
+        .feedback-title {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .feedback-title.success {
+            color: #155724;
+        }
+
+        .feedback-title.error {
+            color: #721c24;
+        }
+
+        .feedback-answer {
             font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .continue-button {
+            width: 100%;
+            padding: 18px;
+            background: #ffffff;
+            color: #667eea;
+            border: 3px solid #667eea;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .continue-button:active {
+            transform: scale(0.97);
+            background: #f8f9fa;
+        }
+
+        /* Statistics Page */
+        .stats-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-size: 22px;
+            color: #ffffff;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            transition: all 0.2s ease;
+        }
+
+        .back-button:active {
+            transform: scale(0.9);
+        }
+
+        .stats-heading {
+            font-size: 22px;
+            font-weight: 800;
+            color: #ffffff;
+            flex: 1;
+        }
+
+        .stats-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 20px 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 2px solid #f1f3f5;
+        }
+
+        .stat-card.success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-color: #28a745;
+        }
+
+        .stat-card.error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            border-color: #dc3545;
+        }
+
+        .stat-card.info {
+            background: linear-gradient(135deg, #cfe2ff 0%, #b6d4fe 100%);
+            border-color: #0d6efd;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .stat-number.success {
+            color: #155724;
+        }
+
+        .stat-number.error {
+            color: #721c24;
+        }
+
+        .stat-number.info {
+            color: #084298;
+        }
+
+        .stat-text {
+            font-size: 11px;
+            color: #6c757d;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .answers-group {
+            margin-bottom: 24px;
+        }
+
+        .group-header {
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 15px;
             margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: #ffffff;
         }
 
-        .answers-header.correct {
-            background: #58cc02;
-            color: white;
+        .group-header.success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
         }
 
-        .answers-header.incorrect {
-            background: #ea2b2b;
-            color: white;
+        .group-header.error {
+            background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
         }
 
-        .answer-item {
-            background: white;
+        .answer-card {
+            background: #ffffff;
             border-radius: 12px;
             padding: 16px;
-            margin-bottom: 8px;
-            border: 2px solid #e5e5e5;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border-left: 4px solid #e9ecef;
         }
 
-        .answer-item.correct {
-            border-color: #58cc02;
-            background: #f7fff0;
+        .answer-card.success {
+            border-left-color: #28a745;
+            background: #f8fff9;
         }
 
-        .answer-item.incorrect {
-            border-color: #ea2b2b;
-            background: #fff5f5;
+        .answer-card.error {
+            border-left-color: #dc3545;
+            background: #fff8f8;
         }
 
         .answer-word {
-            font-size: 18px;
-            font-weight: 700;
-            color: #3c3c3c;
-            margin-bottom: 4px;
+            font-size: 17px;
+            font-weight: 800;
+            color: #2d3748;
+            margin-bottom: 6px;
         }
 
-        .answer-translation {
+        .answer-arabic {
             font-size: 14px;
-            color: #777;
+            color: #6c757d;
             direction: rtl;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
-        .answer-detail {
+        .answer-user {
             font-size: 13px;
-            color: #3c3c3c;
-            padding: 8px;
-            background: #f7f7f7;
+            color: #495057;
+            background: #f1f3f5;
+            padding: 8px 12px;
             border-radius: 8px;
-            margin-top: 8px;
+            margin-bottom: 6px;
         }
 
-        .answer-detail.error {
-            background: #ffdfe0;
-            color: #ea2b2b;
-            font-weight: 600;
+        .answer-correction {
+            font-size: 13px;
+            font-weight: 700;
+            color: #dc3545;
+            background: #f8d7da;
+            padding: 8px 12px;
+            border-radius: 8px;
         }
 
-        .empty-state {
+        .empty-message {
             text-align: center;
             padding: 40px 20px;
-            color: #afafaf;
+            color: #adb5bd;
         }
 
         .empty-icon {
-            font-size: 48px;
+            font-size: 56px;
             margin-bottom: 12px;
         }
 
         .empty-text {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
         }
 
-        /* Action Buttons in Stats */
-        .stats-actions {
-            padding: 16px;
-            border-top: 2px solid #e5e5e5;
-            background: white;
+        .stats-footer {
+            padding: 16px 20px;
+            background: #ffffff;
+            border-top: 1px solid #e9ecef;
             flex-shrink: 0;
         }
 
-        .restart-btn {
+        .reset-button {
             width: 100%;
             padding: 18px;
-            background: #ff4b4b;
-            color: white;
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: #ffffff;
             border: none;
-            border-radius: 16px;
-            font-size: 18px;
+            border-radius: 14px;
+            font-size: 17px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.3s ease;
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
             text-transform: uppercase;
-            box-shadow: 0 4px 0 #d63636;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
         }
 
-        .restart-btn:active {
-            transform: translateY(3px);
-            box-shadow: 0 1px 0 #d63636;
+        .reset-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
         }
 
         /* Animations */
-        @keyframes slideIn {
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
             from {
                 opacity: 0;
-                transform: translateY(-10px);
+                transform: translateY(-20px);
             }
             to {
                 opacity: 1;
@@ -645,10 +714,10 @@
             }
         }
 
-        @keyframes slideUp {
+        @keyframes slideUpFade {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -656,94 +725,103 @@
             }
         }
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
-            20%, 40%, 60%, 80% { transform: translateX(8px); }
-        }
-
-        @keyframes correctPulse {
-            0% { transform: scale(1); }
+        @keyframes successPulse {
+            0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        }
+
+        @keyframes errorShake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
+            20%, 40%, 60%, 80% { transform: translateX(6px); }
         }
 
         /* Responsive */
-        @media (max-height: 600px) {
-            .question-text {
+        @media (max-height: 650px) {
+            .arabic-text {
                 font-size: 36px;
             }
             
-            .main-content {
-                padding: 16px;
+            .content {
+                padding: 20px 16px;
             }
             
-            .question-card {
-                gap: 16px;
+            .question-area {
+                gap: 20px;
             }
             
-            .article-btn {
+            .article-option {
                 padding: 14px;
-                font-size: 18px;
+                font-size: 16px;
             }
             
             .word-input {
-                padding: 14px 16px;
+                padding: 16px 18px;
                 font-size: 16px;
             }
         }
 
-        @media (max-height: 500px) and (orientation: landscape) {
+        @media (max-height: 550px) and (orientation: landscape) {
             .header {
-                padding: 8px 16px;
+                padding: 12px 20px 16px 20px;
             }
             
-            .progress-bar-container {
-                height: 12px;
-                margin-top: 8px;
+            .header-top {
+                margin-bottom: 12px;
             }
             
-            .score-pills {
-                margin-top: 6px;
+            .brand-name {
+                font-size: 18px;
             }
             
-            .score-pill {
-                padding: 6px;
-                font-size: 12px;
+            .progress-section {
+                padding: 10px 14px;
             }
             
-            .main-content {
-                padding: 12px;
+            .progress-bar {
+                margin-bottom: 10px;
             }
             
-            .question-text {
-                font-size: 28px;
+            .score-box {
+                padding: 4px;
             }
             
-            .question-card {
+            .score-value {
+                font-size: 18px;
+            }
+            
+            .content {
+                padding: 16px;
+            }
+            
+            .arabic-text {
+                font-size: 32px;
+            }
+            
+            .question-area {
+                gap: 16px;
+            }
+            
+            .answer-section {
                 gap: 12px;
             }
             
-            .article-buttons {
-                gap: 8px;
-            }
-            
-            .article-btn {
-                padding: 12px;
-                font-size: 16px;
-            }
-            
-            .word-input {
+            .article-option {
                 padding: 12px;
                 font-size: 15px;
             }
             
-            .bottom-section {
+            .word-input {
+                padding: 14px 16px;
+                font-size: 15px;
+            }
+            
+            .bottom-actions {
                 padding: 12px 16px;
             }
             
-            .check-btn {
-                padding: 14px;
+            .check-button {
+                padding: 16px;
                 font-size: 16px;
             }
         }
@@ -753,118 +831,133 @@
     <div class="container">
         <!-- QUIZ PAGE -->
         <div class="page active" id="quiz-page">
-            <!-- Header -->
             <div class="header">
-                <div class="header-content">
-                    <div class="logo">Deutsch Mit Radouane</div>
-                    <div class="stats-icon" id="stats-btn">📊</div>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" id="progress-bar"></div>
-                </div>
-                <div class="score-pills">
-                    <div class="score-pill correct">
-                        ✓ <span id="correct-score">0</span>
+                <div class="header-top">
+                    <div class="branding">
+                        <div class="brand-name">Deutsch Mit Radouane</div>
+                        <div class="brand-subtitle">تعلم الألمانية مع رضوان</div>
                     </div>
-                    <div class="score-pill incorrect">
-                        ✗ <span id="incorrect-score">0</span>
+                    <div class="stats-btn" id="open-stats">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M3 3v18h18"/>
+                            <path d="M18 17V9"/>
+                            <path d="M13 17V5"/>
+                            <path d="M8 17v-3"/>
+                        </svg>
                     </div>
-                    <div class="score-pill total">
-                        ∑ <span id="total-score">0</span>
+                </div>
+                
+                <div class="progress-section">
+                    <div class="progress-info">
+                        <span class="progress-text">Fortschritt / التقدم</span>
+                        <span class="progress-count" id="progress-text">0/198</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="score-grid">
+                        <div class="score-box">
+                            <span class="score-value" id="correct-count">0</span>
+                            <span class="score-label">صحيح</span>
+                        </div>
+                        <div class="score-box">
+                            <span class="score-value" id="incorrect-count">0</span>
+                            <span class="score-label">خطأ</span>
+                        </div>
+                        <div class="score-box">
+                            <span class="score-value" id="total-count">0</span>
+                            <span class="score-label">الكل</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Main Content -->
-            <div class="main-content">
-                <div class="question-card">
-                    <div class="question-prompt">اختر الأداة و اكتب الكلمة</div>
-                    <div class="question-text" id="question-text"></div>
+            <div class="content">
+                <div class="question-area">
+                    <div class="question-label">Wähle den Artikel & Schreibe das Wort</div>
+                    <div class="arabic-text" id="arabic-word"></div>
                     
-                    <div class="article-buttons">
-                        <button class="article-btn" data-article="der">der</button>
-                        <button class="article-btn" data-article="die">die</button>
-                        <button class="article-btn" data-article="das">das</button>
-                    </div>
-
-                    <div class="word-input-container">
-                        <input 
-                            type="text" 
-                            class="word-input" 
-                            id="word-input" 
-                            placeholder="Schreiben Sie hier..."
-                            autocomplete="off"
-                            autocorrect="off"
-                            autocapitalize="off"
-                            spellcheck="false"
-                        >
+                    <div class="answer-section">
+                        <div class="articles-grid">
+                            <button class="article-option" data-article="der"><span>der</span></button>
+                            <button class="article-option" data-article="die"><span>die</span></button>
+                            <button class="article-option" data-article="das"><span>das</span></button>
+                        </div>
+                        
+                        <div class="word-input-wrapper">
+                            <input 
+                                type="text" 
+                                class="word-input" 
+                                id="word-input"
+                                placeholder="Wort eingeben..."
+                                autocomplete="off"
+                                autocorrect="off"
+                                autocapitalize="off"
+                                spellcheck="false"
+                            >
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Bottom Section -->
-            <div class="bottom-section" id="check-section">
-                <button class="check-btn" id="check-btn" disabled>Prüfen</button>
+            <div class="bottom-actions" id="check-section">
+                <button class="check-button" id="check-btn" disabled>Überprüfen</button>
             </div>
 
-            <!-- Feedback Section -->
-            <div class="feedback-section" id="feedback-section">
-                <div class="feedback-content">
-                    <div class="feedback-icon" id="feedback-icon"></div>
-                    <div class="feedback-text">
+            <div class="feedback-panel" id="feedback-panel">
+                <div class="feedback-header">
+                    <div class="feedback-emoji" id="feedback-emoji"></div>
+                    <div class="feedback-message">
                         <div class="feedback-title" id="feedback-title"></div>
-                        <div class="feedback-detail" id="feedback-detail"></div>
+                        <div class="feedback-answer" id="feedback-answer"></div>
                     </div>
                 </div>
-                <button class="continue-btn" id="continue-btn">Weiter</button>
+                <button class="continue-button" id="continue-btn">Weiter</button>
             </div>
         </div>
 
         <!-- STATISTICS PAGE -->
         <div class="page" id="stats-page">
             <div class="stats-header">
-                <button class="back-btn" id="back-btn">←</button>
-                <div class="stats-title">Deine Statistik</div>
+                <button class="back-button" id="back-btn">←</button>
+                <div class="stats-heading">Deine Statistik</div>
             </div>
 
-            <div class="stats-body">
-                <!-- Summary Cards -->
-                <div class="stats-summary">
-                    <div class="stat-card correct">
-                        <div class="stat-number correct" id="stats-correct">0</div>
-                        <div class="stat-label">Richtig</div>
+            <div class="stats-content">
+                <div class="stats-cards">
+                    <div class="stat-card success">
+                        <span class="stat-number success" id="stats-correct">0</span>
+                        <span class="stat-text">Richtig</span>
                     </div>
-                    <div class="stat-card incorrect">
-                        <div class="stat-number incorrect" id="stats-incorrect">0</div>
-                        <div class="stat-label">Falsch</div>
+                    <div class="stat-card error">
+                        <span class="stat-number error" id="stats-incorrect">0</span>
+                        <span class="stat-text">Falsch</span>
                     </div>
-                    <div class="stat-card total">
-                        <div class="stat-number total" id="stats-total">0</div>
-                        <div class="stat-label">Gesamt</div>
+                    <div class="stat-card info">
+                        <span class="stat-number info" id="stats-total">0</span>
+                        <span class="stat-text">Gesamt</span>
                     </div>
                 </div>
 
-                <!-- Correct Answers -->
-                <div class="answers-section">
-                    <div class="answers-header correct">
+                <div class="answers-group">
+                    <div class="group-header success">
                         <span>✓ Richtige Antworten</span>
-                        <span id="correct-count">0</span>
+                        <span id="correct-badge">0</span>
                     </div>
                     <div id="correct-list"></div>
                 </div>
 
-                <!-- Incorrect Answers -->
-                <div class="answers-section">
-                    <div class="answers-header incorrect">
+                <div class="answers-group">
+                    <div class="group-header error">
                         <span>✗ Falsche Antworten</span>
-                        <span id="incorrect-count">0</span>
+                        <span id="incorrect-badge">0</span>
                     </div>
                     <div id="incorrect-list"></div>
                 </div>
             </div>
 
-            <div class="stats-actions">
-                <button class="restart-btn" id="restart-btn">Neu Starten</button>
+            <div class="stats-footer">
+                <button class="reset-button" id="reset-btn">Neu Starten</button>
             </div>
         </div>
     </div>
@@ -970,7 +1063,104 @@
             { german: "das Problem", arabic: "المشكلة", article: "das", word: "Problem" },
             { german: "die Lösung", arabic: "الحل", article: "die", word: "Lösung" },
             { german: "die Meinung", arabic: "الرأي", article: "die", word: "Meinung" },
-            { german: "die Erfahrung", arabic: "الخبرة", article: "die", word: "Erfahrung" }
+            { german: "die Erfahrung", arabic: "الخبرة", article: "die", word: "Erfahrung" },
+            { german: "das Telefon", arabic: "الهاتف", article: "das", word: "Telefon" },
+            { german: "der Anruf", arabic: "المكالمة", article: "der", word: "Anruf" },
+            { german: "die E-Mail", arabic: "البريد الإلكتروني", article: "die", word: "E-Mail" },
+            { german: "der Brief", arabic: "الرسالة", article: "der", word: "Brief" },
+            { german: "das Internet", arabic: "الإنترنت", article: "das", word: "Internet" },
+            { german: "die Webseite", arabic: "الموقع الإلكتروني", article: "die", word: "Webseite" },
+            { german: "das Passwort", arabic: "كلمة المرور", article: "das", word: "Passwort" },
+            { german: "die Nummer", arabic: "الرقم", article: "die", word: "Nummer" },
+            { german: "die Adresse", arabic: "العنوان", article: "die", word: "Adresse" },
+            { german: "das Amt", arabic: "الدائرة / المكتب الحكومي", article: "das", word: "Amt" },
+            { german: "die Behörde", arabic: "السلطة / الجهة الرسمية", article: "die", word: "Behörde" },
+            { german: "der Pass", arabic: "جواز السفر", article: "der", word: "Pass" },
+            { german: "der Ausweis", arabic: "بطاقة الهوية", article: "der", word: "Ausweis" },
+            { german: "die Anmeldung", arabic: "التسجيل", article: "die", word: "Anmeldung" },
+            { german: "der Antrag", arabic: "الطلب", article: "der", word: "Antrag" },
+            { german: "die Bestätigung", arabic: "التأكيد", article: "die", word: "Bestätigung" },
+            { german: "der Stempel", arabic: "الختم", article: "der", word: "Stempel" },
+            { german: "die Unterschrift", arabic: "التوقيع", article: "die", word: "Unterschrift" },
+            { german: "der Schalter", arabic: "الشباك", article: "der", word: "Schalter" },
+            { german: "die Reise", arabic: "الرحلة", article: "die", word: "Reise" },
+            { german: "das Ticket", arabic: "التذكرة", article: "das", word: "Ticket" },
+            { german: "der Flug", arabic: "الرحلة الجوية", article: "der", word: "Flug" },
+            { german: "das Gate", arabic: "بوابة الصعود", article: "das", word: "Gate" },
+            { german: "das Gepäck", arabic: "الأمتعة", article: "das", word: "Gepäck" },
+            { german: "der Koffer", arabic: "الحقيبة", article: "der", word: "Koffer" },
+            { german: "der Sitzplatz", arabic: "المقعد", article: "der", word: "Sitzplatz" },
+            { german: "die Kontrolle", arabic: "التفتيش / المراقبة", article: "die", word: "Kontrolle" },
+            { german: "der Ausgang", arabic: "المخرج", article: "der", word: "Ausgang" },
+            { german: "der Eingang", arabic: "المدخل", article: "der", word: "Eingang" },
+            { german: "die Freizeit", arabic: "وقت الفراغ", article: "die", word: "Freizeit" },
+            { german: "der Sport", arabic: "الرياضة", article: "der", word: "Sport" },
+            { german: "das Spiel", arabic: "اللعبة", article: "das", word: "Spiel" },
+            { german: "der Film", arabic: "الفيلم", article: "der", word: "Film" },
+            { german: "die Musik", arabic: "الموسيقى", article: "die", word: "Musik" },
+            { german: "das Buch", arabic: "الكتاب", article: "das", word: "Buch" },
+            { german: "die Zeitung", arabic: "الجريدة", article: "die", word: "Zeitung" },
+            { german: "das Fernsehen", arabic: "التلفاز", article: "das", word: "Fernsehen" },
+            { german: "der Park", arabic: "الحديقة", article: "der", word: "Park" },
+            { german: "das Restaurant", arabic: "المطعم", article: "das", word: "Restaurant" },
+            { german: "das Café", arabic: "المقهى", article: "das", word: "Café" },
+            { german: "die Bestellung", arabic: "الطلب", article: "die", word: "Bestellung" },
+            { german: "die Speisekarte", arabic: "قائمة الطعام", article: "die", word: "Speisekarte" },
+            { german: "das Frühstück", arabic: "الإفطار", article: "das", word: "Frühstück" },
+            { german: "das Mittagessen", arabic: "الغداء", article: "das", word: "Mittagessen" },
+            { german: "das Abendessen", arabic: "العشاء", article: "das", word: "Abendessen" },
+            { german: "das Trinkgeld", arabic: "البقشيش", article: "das", word: "Trinkgeld" },
+            { german: "der Service", arabic: "الخدمة", article: "der", word: "Service" },
+            { german: "der Kellner", arabic: "النادل", article: "der", word: "Kellner" },
+            { german: "das Wetter", arabic: "الطقس", article: "das", word: "Wetter" },
+            { german: "der Regen", arabic: "المطر", article: "der", word: "Regen" },
+            { german: "der Schnee", arabic: "الثلج", article: "der", word: "Schnee" },
+            { german: "die Sonne", arabic: "الشمس", article: "die", word: "Sonne" },
+            { german: "der Wind", arabic: "الرياح", article: "der", word: "Wind" },
+            { german: "die Temperatur", arabic: "درجة الحرارة", article: "die", word: "Temperatur" },
+            { german: "der Sommer", arabic: "الصيف", article: "der", word: "Sommer" },
+            { german: "der Winter", arabic: "الشتاء", article: "der", word: "Winter" },
+            { german: "der Frühling", arabic: "الربيع", article: "der", word: "Frühling" },
+            { german: "der Herbst", arabic: "الخريف", article: "der", word: "Herbst" },
+            { german: "die Kleidung", arabic: "الملابس", article: "die", word: "Kleidung" },
+            { german: "die Jacke", arabic: "السترة", article: "die", word: "Jacke" },
+            { german: "die Hose", arabic: "البنطال", article: "die", word: "Hose" },
+            { german: "das Hemd", arabic: "القميص", article: "das", word: "Hemd" },
+            { german: "der Schuh", arabic: "الحذاء", article: "der", word: "Schuh" },
+            { german: "die Tasche", arabic: "الحقيبة", article: "die", word: "Tasche" },
+            { german: "der Laden", arabic: "المتجر", article: "der", word: "Laden" },
+            { german: "der Einkauf", arabic: "التسوق", article: "der", word: "Einkauf" },
+            { german: "die Ruhe", arabic: "الهدوء", article: "die", word: "Ruhe" },
+            { german: "der Stress", arabic: "التوتر", article: "der", word: "Stress" },
+            { german: "die Angst", arabic: "الخوف", article: "die", word: "Angst" },
+            { german: "die Freude", arabic: "الفرح", article: "die", word: "Freude" },
+            { german: "die Hoffnung", arabic: "الأمل", article: "die", word: "Hoffnung" },
+            { german: "der Plan", arabic: "الخطة", article: "der", word: "Plan" },
+            { german: "die Zukunft", arabic: "المستقبل", article: "die", word: "Zukunft" },
+            { german: "die Vergangenheit", arabic: "الماضي", article: "die", word: "Vergangenheit" },
+            { german: "die Gegenwart", arabic: "الحاضر", article: "die", word: "Gegenwart" },
+            { german: "der Anfang", arabic: "البداية", article: "der", word: "Anfang" },
+            { german: "das Ende", arabic: "النهاية", article: "das", word: "Ende" },
+            { german: "der Grund", arabic: "السبب", article: "der", word: "Grund" },
+            { german: "die Chance", arabic: "الفرصة", article: "die", word: "Chance" },
+            { german: "die Entscheidung", arabic: "القرار", article: "die", word: "Entscheidung" },
+            { german: "die Verantwortung", arabic: "المسؤولية", article: "die", word: "Verantwortung" },
+            { german: "die Möglichkeit", arabic: "الإمكانية", article: "die", word: "Möglichkeit" },
+            { german: "die Schwierigkeit", arabic: "الصعوبة", article: "die", word: "Schwierigkeit" },
+            { german: "der Erfolg", arabic: "النجاح", article: "der", word: "Erfolg" },
+            { german: "der Fehler", arabic: "الخطأ", article: "der", word: "Fehler" },
+            { german: "die Ordnung", arabic: "النظام", article: "die", word: "Ordnung" },
+            { german: "das Chaos", arabic: "الفوضى", article: "das", word: "Chaos" },
+            { german: "die Sicherheit", arabic: "الأمان", article: "die", word: "Sicherheit" },
+            { german: "die Gefahr", arabic: "الخطر", article: "die", word: "Gefahr" },
+            { german: "die Regelung", arabic: "التنظيم", article: "die", word: "Regelung" },
+            { german: "die Unterstützung", arabic: "الدعم", article: "die", word: "Unterstützung" },
+            { german: "die Beziehung", arabic: "العلاقة", article: "die", word: "Beziehung" },
+            { german: "die Situation", arabic: "الوضع", article: "die", word: "Situation" },
+            { german: "das Ergebnis", arabic: "النتيجة", article: "das", word: "Ergebnis" },
+            { german: "der Nachbar", arabic: "الجار", article: "der", word: "Nachbar" },
+            { german: "die Nachbarin", arabic: "الجارة", article: "die", word: "Nachbarin" },
+            { german: "die Umgebung", arabic: "المحيط", article: "die", word: "Umgebung" }
         ];
 
         // State
@@ -984,23 +1174,24 @@
         let incorrectAnswers = [];
 
         // Elements
-        const questionText = document.getElementById('question-text');
+        const arabicWord = document.getElementById('arabic-word');
         const wordInput = document.getElementById('word-input');
         const checkBtn = document.getElementById('check-btn');
         const checkSection = document.getElementById('check-section');
-        const feedbackSection = document.getElementById('feedback-section');
-        const feedbackIcon = document.getElementById('feedback-icon');
+        const feedbackPanel = document.getElementById('feedback-panel');
+        const feedbackEmoji = document.getElementById('feedback-emoji');
         const feedbackTitle = document.getElementById('feedback-title');
-        const feedbackDetail = document.getElementById('feedback-detail');
+        const feedbackAnswer = document.getElementById('feedback-answer');
         const continueBtn = document.getElementById('continue-btn');
-        const progressBar = document.getElementById('progress-bar');
-        const correctScoreEl = document.getElementById('correct-score');
-        const incorrectScoreEl = document.getElementById('incorrect-score');
-        const totalScoreEl = document.getElementById('total-score');
-        const articleBtns = document.querySelectorAll('.article-btn');
-        const statsBtn = document.getElementById('stats-btn');
+        const progressFill = document.getElementById('progress-fill');
+        const progressText = document.getElementById('progress-text');
+        const correctCountEl = document.getElementById('correct-count');
+        const incorrectCountEl = document.getElementById('incorrect-count');
+        const totalCountEl = document.getElementById('total-count');
+        const articleBtns = document.querySelectorAll('.article-option');
+        const openStatsBtn = document.getElementById('open-stats');
         const backBtn = document.getElementById('back-btn');
-        const restartBtn = document.getElementById('restart-btn');
+        const resetBtn = document.getElementById('reset-btn');
         const quizPage = document.getElementById('quiz-page');
         const statsPage = document.getElementById('stats-page');
 
@@ -1022,7 +1213,7 @@
             }
         });
 
-        // Update Check Button State
+        // Update Check Button
         function updateCheckButton() {
             checkBtn.disabled = !selectedArticle || !wordInput.value.trim();
         }
@@ -1040,26 +1231,25 @@
             let originalIndex = vocabulary.indexOf(currentQuestion);
             usedWords.push(originalIndex);
 
-            questionText.textContent = currentQuestion.arabic;
+            arabicWord.textContent = currentQuestion.arabic;
             wordInput.value = '';
             wordInput.className = 'word-input';
             selectedArticle = null;
             
             articleBtns.forEach(btn => {
-                btn.className = 'article-btn';
+                btn.className = 'article-option';
             });
 
             checkSection.style.display = 'block';
-            feedbackSection.classList.remove('show', 'correct', 'incorrect');
+            feedbackPanel.classList.remove('show', 'success', 'error');
             
             updateCheckButton();
             updateProgress();
             
-            // Focus input
             setTimeout(() => wordInput.focus(), 100);
         }
 
-        // Normalize Text
+        // Normalize
         function normalizeGerman(text) {
             return text.trim()
                 .toLowerCase()
@@ -1080,18 +1270,16 @@
             const correctWord = normalizeGerman(userWord) === normalizeGerman(currentQuestion.word);
             const isCorrect = correctArticle && correctWord;
 
-            // Update UI
             articleBtns.forEach(btn => {
                 if (btn.dataset.article === currentQuestion.article) {
                     btn.classList.add('correct');
                 } else if (btn.dataset.article === selectedArticle && !correctArticle) {
-                    btn.classList.add('incorrect');
+                    btn.classList.add('wrong');
                 }
             });
 
-            wordInput.className = 'word-input ' + (correctWord ? 'correct' : 'incorrect');
+            wordInput.className = 'word-input ' + (correctWord ? 'correct' : 'wrong');
 
-            // Store answer
             const answerRecord = {
                 question: currentQuestion,
                 userArticle: selectedArticle,
@@ -1104,28 +1292,28 @@
                 correctCount++;
                 correctAnswers.push(answerRecord);
                 
-                feedbackSection.className = 'feedback-section show correct';
-                feedbackIcon.className = 'feedback-icon correct';
-                feedbackIcon.textContent = '✓';
-                feedbackTitle.className = 'feedback-title correct';
-                feedbackTitle.textContent = 'Ausgezeichnet!';
-                feedbackDetail.textContent = currentQuestion.german;
+                feedbackPanel.className = 'feedback-panel show success';
+                feedbackEmoji.className = 'feedback-emoji success';
+                feedbackEmoji.textContent = '✓';
+                feedbackTitle.className = 'feedback-title success';
+                feedbackTitle.textContent = 'Perfekt!';
+                feedbackAnswer.textContent = currentQuestion.german;
             } else {
                 incorrectCount++;
                 incorrectAnswers.push(answerRecord);
                 
-                feedbackSection.className = 'feedback-section show incorrect';
-                feedbackIcon.className = 'feedback-icon incorrect';
-                feedbackIcon.textContent = '✗';
-                feedbackTitle.className = 'feedback-title incorrect';
-                feedbackTitle.textContent = 'Nicht ganz richtig';
+                feedbackPanel.className = 'feedback-panel show error';
+                feedbackEmoji.className = 'feedback-emoji error';
+                feedbackEmoji.textContent = '✗';
+                feedbackTitle.className = 'feedback-title error';
+                feedbackTitle.textContent = 'Nicht ganz';
                 
                 if (!correctArticle && !correctWord) {
-                    feedbackDetail.textContent = 'Richtige Antwort: ' + currentQuestion.german;
+                    feedbackAnswer.textContent = 'Richtig: ' + currentQuestion.german;
                 } else if (!correctArticle) {
-                    feedbackDetail.textContent = 'Richtiger Artikel: ' + currentQuestion.article;
+                    feedbackAnswer.textContent = 'Artikel: ' + currentQuestion.article;
                 } else {
-                    feedbackDetail.textContent = 'Richtiges Wort: ' + currentQuestion.word;
+                    feedbackAnswer.textContent = 'Wort: ' + currentQuestion.word;
                 }
             }
 
@@ -1135,84 +1323,83 @@
 
         // Update Scores
         function updateScores() {
-            correctScoreEl.textContent = correctCount;
-            incorrectScoreEl.textContent = incorrectCount;
-            totalScoreEl.textContent = totalCount;
+            correctCountEl.textContent = correctCount;
+            incorrectCountEl.textContent = incorrectCount;
+            totalCountEl.textContent = totalCount;
         }
 
         // Update Progress
         function updateProgress() {
             const percent = (usedWords.length / vocabulary.length) * 100;
-            progressBar.style.width = percent + '%';
+            progressFill.style.width = percent + '%';
+            progressText.textContent = `${usedWords.length}/${vocabulary.length}`;
         }
 
-        // Continue to Next Question
+        // Continue
         continueBtn.addEventListener('click', loadQuestion);
 
-        // Show Stats Page
-        function showStatsPage() {
+        // Show Stats
+        function showStats() {
             statsPage.classList.add('active');
             quizPage.classList.remove('active');
-            updateStatsPage();
+            updateStats();
         }
 
-        // Show Quiz Page
-        function showQuizPage() {
+        // Show Quiz
+        function showQuiz() {
             quizPage.classList.add('active');
             statsPage.classList.remove('active');
         }
 
-        // Update Stats Page
-        function updateStatsPage() {
+        // Update Stats
+        function updateStats() {
             document.getElementById('stats-correct').textContent = correctCount;
             document.getElementById('stats-incorrect').textContent = incorrectCount;
             document.getElementById('stats-total').textContent = totalCount;
-            document.getElementById('correct-count').textContent = correctCount;
-            document.getElementById('incorrect-count').textContent = incorrectCount;
+            document.getElementById('correct-badge').textContent = correctCount;
+            document.getElementById('incorrect-badge').textContent = incorrectCount;
 
-            // Correct answers
             const correctList = document.getElementById('correct-list');
             if (correctAnswers.length === 0) {
-                correctList.innerHTML = '<div class="empty-state"><div class="empty-icon">🎯</div><div class="empty-text">Noch keine richtigen Antworten</div></div>';
+                correctList.innerHTML = '<div class="empty-message"><div class="empty-icon">🎯</div><div class="empty-text">Noch keine richtigen Antworten</div></div>';
             } else {
                 correctList.innerHTML = correctAnswers.map(a => `
-                    <div class="answer-item correct">
+                    <div class="answer-card success">
                         <div class="answer-word">${a.question.german}</div>
-                        <div class="answer-translation">${a.question.arabic}</div>
-                        <div class="answer-detail">Deine Antwort: ${a.userArticle} ${a.userWord}</div>
+                        <div class="answer-arabic">${a.question.arabic}</div>
+                        <div class="answer-user">Deine Antwort: ${a.userArticle} ${a.userWord}</div>
                     </div>
                 `).reverse().join('');
             }
 
-            // Incorrect answers
             const incorrectList = document.getElementById('incorrect-list');
             if (incorrectAnswers.length === 0) {
-                incorrectList.innerHTML = '<div class="empty-state"><div class="empty-icon">💪</div><div class="empty-text">Noch keine falschen Antworten</div></div>';
+                incorrectList.innerHTML = '<div class="empty-message"><div class="empty-icon">💪</div><div class="empty-text">Noch keine falschen Antworten</div></div>';
             } else {
                 incorrectList.innerHTML = incorrectAnswers.map(a => {
-                    let error = '';
+                    let correction = '';
                     if (!a.correctArticle && !a.correctWord) {
-                        error = `Richtig: ${a.question.german}`;
+                        correction = `Richtig: ${a.question.german}`;
                     } else if (!a.correctArticle) {
-                        error = `Richtiger Artikel: ${a.question.article}`;
+                        correction = `Richtiger Artikel: ${a.question.article}`;
                     } else {
-                        error = `Richtiges Wort: ${a.question.word}`;
+                        correction = `Richtiges Wort: ${a.question.word}`;
                     }
                     
                     return `
-                        <div class="answer-item incorrect">
+                        <div class="answer-card error">
                             <div class="answer-word">${a.question.german}</div>
-                            <div class="answer-translation">${a.question.arabic}</div>
-                            <div class="answer-detail">Deine Antwort: ${a.userArticle} ${a.userWord}</div>
-                            <div class="answer-detail error">${error}</div>
+                            <div class="answer-arabic">${a.question.arabic}</div>
+                            <div class="answer-user">Deine Antwort: ${a.userArticle} ${a.userWord}</div>
+                            <div class="answer-correction">${correction}</div>
                         </div>
                     `;
                 }).reverse().join('');
             }
         }
 
-        // Restart
-        function restart() {
+        // Reset
+        function reset() {
             if (confirm('Möchten Sie wirklich neu starten? Alle Statistiken werden gelöscht.')) {
                 correctCount = 0;
                 incorrectCount = 0;
@@ -1221,15 +1408,15 @@
                 correctAnswers = [];
                 incorrectAnswers = [];
                 updateScores();
-                showQuizPage();
+                showQuiz();
                 loadQuestion();
             }
         }
 
-        // Event Listeners
-        statsBtn.addEventListener('click', showStatsPage);
-        backBtn.addEventListener('click', showQuizPage);
-        restartBtn.addEventListener('click', restart);
+        // Events
+        openStatsBtn.addEventListener('click', showStats);
+        backBtn.addEventListener('click', showQuiz);
+        resetBtn.addEventListener('click', reset);
         checkBtn.addEventListener('click', checkAnswer);
 
         // Initialize
