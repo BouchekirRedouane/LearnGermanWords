@@ -2,7 +2,7 @@
 <html lang="de" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Deutsch Artikel Lernen - تعلم أدوات التعريف الألمانية</title>
     <style>
         * {
@@ -14,151 +14,130 @@
         html, body {
             width: 100%;
             height: 100%;
+            overflow: hidden;
         }
 
         body {
-            min-height: 100dvh; /* better on mobile */
+            min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 10px; /* smaller padding for phones */
+            padding: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
         }
 
         .container {
             background: white;
-            border-radius: 16px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             width: 100%;
-            max-width: 100%;
-            padding: 20px;
+            max-width: 500px;
+            height: 100%;
+            max-height: calc(100vh - 16px);
+            max-height: calc(100dvh - 16px);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
+        /* Header - Compact */
+        .header {
+            text-align: center;
+            margin-bottom: 8px;
+            flex-shrink: 0;
+        }
 
         h1 {
-            text-align: center;
             color: #667eea;
-            margin-bottom: 10px;
-            font-size: 28px;
+            font-size: 20px;
+            margin-bottom: 2px;
+            font-weight: 700;
         }
-
-        @media (max-width: 600px) {
-
-            h1 {
-                font-size: 22px;
-            }
-
-            .subtitle {
-                font-size: 16px;
-            }
-
-            .arabic-word {
-                font-size: 36px;
-            }
-
-            .score-value {
-                font-size: 24px;
-            }
-
-            .article-btn {
-                font-size: 16px;
-                padding: 12px;
-            }
-
-            .word-input {
-                font-size: 16px;
-                padding: 12px;
-            }
-
-            .submit-btn {
-                font-size: 16px;
-                padding: 14px;
-            }
-
-            .restart-btn {
-                font-size: 15px;
-                padding: 12px;
-            }
-
-            .quiz-card {
-                padding: 20px;
-            }
-
-            .article-buttons {
-                flex-direction: column; /* BIG improvement on phones */
-            }
-        }
-
 
         .subtitle {
-            text-align: center;
             color: #764ba2;
-            margin-bottom: 30px;
-            font-size: 20px;
+            font-size: 14px;
             direction: rtl;
         }
 
+        /* Score Board - Compact */
         .score-board {
             display: flex;
             justify-content: space-around;
-            margin-bottom: 30px;
-            padding: 20px;
+            margin-bottom: 8px;
+            padding: 10px 8px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
+            border-radius: 10px;
             color: white;
+            flex-shrink: 0;
         }
 
         .score-item {
             text-align: center;
+            flex: 1;
         }
 
         .score-label {
-            font-size: 14px;
+            font-size: 10px;
             opacity: 0.9;
-            margin-bottom: 5px;
+            margin-bottom: 2px;
+            line-height: 1.2;
         }
 
         .score-value {
-            font-size: 32px;
+            font-size: 20px;
             font-weight: bold;
         }
 
+        /* Quiz Card - Flexible */
         .quiz-card {
             background: #f8f9fa;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 20px;
+            border-radius: 10px;
+            padding: 12px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         .arabic-word {
             text-align: center;
-            font-size: 48px;
+            font-size: 32px;
             color: #333;
-            margin-bottom: 30px;
+            margin-bottom: 12px;
             direction: rtl;
             font-weight: bold;
+            flex-shrink: 0;
         }
 
+        /* Article Buttons - Compact Grid */
         .article-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-shrink: 0;
         }
 
         .article-btn {
-            flex: 1;
-            padding: 15px;
-            border: 3px solid #e0e0e0;
+            padding: 12px 8px;
+            border: 2px solid #e0e0e0;
             background: white;
-            border-radius: 10px;
-            font-size: 18px;
+            border-radius: 8px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .article-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        .article-btn:active {
+            transform: scale(0.95);
         }
 
         .article-btn.selected {
@@ -179,14 +158,16 @@
             color: white;
         }
 
+        /* Input Field - Compact */
         .word-input {
             width: 100%;
-            padding: 15px;
-            border: 3px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 18px;
-            margin-bottom: 20px;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 12px;
             transition: border-color 0.3s ease;
+            flex-shrink: 0;
         }
 
         .word-input:focus {
@@ -204,37 +185,41 @@
             background: #ffebee;
         }
 
+        /* Submit Button - Compact */
         .submit-btn {
             width: 100%;
-            padding: 18px;
+            padding: 14px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 18px;
+            border-radius: 8px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        .submit-btn:active {
+            transform: scale(0.98);
         }
 
         .submit-btn:disabled {
             background: #ccc;
             cursor: not-allowed;
-            transform: none;
         }
 
+        /* Feedback - Compact */
         .feedback {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 10px;
+            margin-top: 8px;
+            padding: 10px;
+            border-radius: 8px;
             text-align: center;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
+            flex-shrink: 0;
         }
 
         .feedback.correct {
@@ -248,73 +233,184 @@
         }
 
         .correct-answer {
-            margin-top: 10px;
-            font-size: 20px;
+            margin-top: 6px;
+            font-size: 16px;
             color: white;
         }
 
+        /* Progress - Compact */
         .progress {
-            margin-top: 20px;
+            margin-top: 8px;
             text-align: center;
             color: #666;
-            font-size: 14px;
+            font-size: 11px;
+            flex-shrink: 0;
         }
 
+        /* Restart Button - Compact */
         .restart-btn {
             width: 100%;
-            padding: 15px;
+            padding: 10px;
             background: #764ba2;
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 14px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 15px;
-            transition: all 0.3s ease;
+            margin-top: 8px;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .restart-btn:hover {
-            background: #5e3a82;
-            transform: translateY(-2px);
+        .restart-btn:active {
+            transform: scale(0.98);
         }
 
+        /* Animations */
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
         }
 
         .shake {
-            animation: shake 0.5s;
+            animation: shake 0.4s;
         }
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-10px); }
         }
 
         .bounce {
-            animation: bounce 0.5s;
+            animation: bounce 0.4s;
+        }
+
+        /* Landscape Optimization */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .container {
+                padding: 8px;
+            }
+
+            h1 {
+                font-size: 16px;
+            }
+
+            .subtitle {
+                font-size: 11px;
+            }
+
+            .score-board {
+                padding: 6px;
+                margin-bottom: 6px;
+            }
+
+            .score-label {
+                font-size: 9px;
+            }
+
+            .score-value {
+                font-size: 16px;
+            }
+
+            .quiz-card {
+                padding: 8px;
+            }
+
+            .arabic-word {
+                font-size: 24px;
+                margin-bottom: 8px;
+            }
+
+            .article-buttons {
+                gap: 6px;
+                margin-bottom: 8px;
+            }
+
+            .article-btn {
+                padding: 8px 6px;
+                font-size: 14px;
+            }
+
+            .word-input {
+                padding: 8px;
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+
+            .submit-btn {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .feedback {
+                padding: 6px;
+                font-size: 12px;
+                margin-top: 6px;
+            }
+
+            .correct-answer {
+                font-size: 13px;
+                margin-top: 4px;
+            }
+
+            .restart-btn {
+                padding: 8px;
+                font-size: 12px;
+                margin-top: 6px;
+            }
+
+            .progress {
+                font-size: 10px;
+                margin-top: 6px;
+            }
+        }
+
+        /* Very Small Screens */
+        @media (max-height: 600px) {
+            .arabic-word {
+                font-size: 28px;
+                margin-bottom: 10px;
+            }
+
+            .score-value {
+                font-size: 18px;
+            }
+
+            .article-btn {
+                padding: 10px 6px;
+            }
+        }
+
+        /* Prevent iOS zoom on input focus */
+        @media screen and (max-width: 767px) {
+            input[type="text"] {
+                font-size: 16px !important;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Deutsch Mit Radouane</h1>
-        <p class="subtitle">تعلم أدوات التعريف الألمانية</p>
+        <div class="header">
+            <h1>Deutsch Mit Radouane</h1>
+            <p class="subtitle">تعلم أدوات التعريف الألمانية</p>
+        </div>
 
         <div class="score-board">
             <div class="score-item">
-                <div class="score-label">Richtig / صحيح</div>
+                <div class="score-label">Richtig<br>صحيح</div>
                 <div class="score-value" id="correct-score">0</div>
             </div>
             <div class="score-item">
-                <div class="score-label">Falsch / خطأ</div>
+                <div class="score-label">Falsch<br>خطأ</div>
                 <div class="score-value" id="incorrect-score">0</div>
             </div>
             <div class="score-item">
-                <div class="score-label">Gesamt / الإجمالي</div>
+                <div class="score-label">Gesamt<br>الإجمالي</div>
                 <div class="score-value" id="total-score">0</div>
             </div>
         </div>
@@ -332,8 +428,11 @@
                 type="text" 
                 class="word-input" 
                 id="word-input" 
-                placeholder="Geben Sie das deutsche Wort ein / أدخل الكلمة الألمانية"
+                placeholder="Deutsche Wort / الكلمة الألمانية"
                 autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
             >
 
             <button class="submit-btn" id="submit-btn">Prüfen / تحقق</button>
@@ -468,6 +567,12 @@
         const restartBtn = document.getElementById('restart-btn');
         const articleBtns = document.querySelectorAll('.article-btn');
 
+        // Prevent zoom on iOS when focusing inputs
+        function preventZoom() {
+            const viewportMeta = document.querySelector('meta[name="viewport"]');
+            viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+        }
+
         // Article button selection
         articleBtns.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -479,28 +584,23 @@
 
         // Load new question
         function loadQuestion() {
-            // Reset if all words used
             if (usedWords.length === vocabulary.length) {
                 usedWords = [];
             }
 
-            // Get random unused word
             let availableWords = vocabulary.filter((_, index) => !usedWords.includes(index));
             let randomIndex = Math.floor(Math.random() * availableWords.length);
             currentQuestion = availableWords[randomIndex];
             
-            // Mark as used
             let originalIndex = vocabulary.indexOf(currentQuestion);
             usedWords.push(originalIndex);
 
-            // Display question
             arabicWordEl.textContent = currentQuestion.arabic;
             wordInputEl.value = '';
             wordInputEl.className = 'word-input';
             feedbackEl.style.display = 'none';
             selectedArticle = null;
             
-            // Reset buttons
             articleBtns.forEach(btn => {
                 btn.className = 'article-btn';
             });
@@ -539,7 +639,6 @@
             const correctWord = normalizeGerman(userWord) === normalizeGerman(currentQuestion.word);
             const isCorrect = correctArticle && correctWord;
 
-            // Update article buttons
             articleBtns.forEach(btn => {
                 if (btn.dataset.article === currentQuestion.article) {
                     btn.classList.add('correct');
@@ -548,7 +647,6 @@
                 }
             });
 
-            // Update input field
             wordInputEl.className = 'word-input ' + (correctWord ? 'correct' : 'incorrect');
 
             if (isCorrect) {
@@ -560,11 +658,11 @@
                 feedbackEl.className = 'feedback incorrect shake';
                 let errorMsg = '✗ Falsch! / خطأ!';
                 if (!correctArticle && !correctWord) {
-                    errorMsg += '<div class="correct-answer">Richtige Antwort: ' + currentQuestion.german + '</div>';
+                    errorMsg += '<div class="correct-answer">' + currentQuestion.german + '</div>';
                 } else if (!correctArticle) {
-                    errorMsg += '<div class="correct-answer">Richtiger Artikel: ' + currentQuestion.article + '</div>';
+                    errorMsg += '<div class="correct-answer">Artikel: ' + currentQuestion.article + '</div>';
                 } else {
-                    errorMsg += '<div class="correct-answer">Richtiges Wort: ' + currentQuestion.word + '</div>';
+                    errorMsg += '<div class="correct-answer">Wort: ' + currentQuestion.word + '</div>';
                 }
                 feedbackEl.innerHTML = errorMsg;
             }
@@ -572,7 +670,6 @@
             feedbackEl.style.display = 'block';
             updateScores();
 
-            // Load next question after delay
             setTimeout(() => {
                 loadQuestion();
             }, 2500);
@@ -587,7 +684,7 @@
 
         // Update progress
         function updateProgress() {
-            progressEl.textContent = `Wort ${usedWords.length} von ${vocabulary.length} / كلمة ${usedWords.length} من ${vocabulary.length}`;
+            progressEl.textContent = `${usedWords.length}/${vocabulary.length}`;
         }
 
         // Restart quiz
@@ -610,7 +707,15 @@
             }
         });
 
+        // Handle keyboard visibility on mobile
+        wordInputEl.addEventListener('focus', () => {
+            setTimeout(() => {
+                wordInputEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        });
+
         // Initialize
+        preventZoom();
         loadQuestion();
     </script>
 </body>
